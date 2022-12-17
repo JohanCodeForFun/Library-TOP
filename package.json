@@ -21,5 +21,8 @@
   "homepage": "https://github.com/JohanCodeForFun/Library-TOP#readme",
   "dependencies": {
     "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "tsc-watch": "^6.0.0"
   }
 }

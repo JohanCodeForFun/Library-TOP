@@ -4,17 +4,27 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Library App</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 	<section id="libraryContent">
 		<div>
 			<h1>Library</h1>
+			<form action="">
+				<div class="form-input">
+					<label for="title">Add title</label>
+					<input form="title" id="inputTitle" type="text" placeholder="add title">
+					<label for="author">Add author</label>
+					<input for="author" id="inputAuthor" type="text" placeholder="add author">
+					<input id="submitBook" type="button" value="Add book to Library">
+					<p id="bookParagraph"></p>
+				</div>
+				
+			</form>
 			
 		</div>
 		<div>
-			<button>Add book</button>
 		</div>
 	</section>
 	<script src="app.js"></script>
