@@ -17,3 +17,11 @@ html {
 	flex-direction: column;
 	gap: .5rem;
 }
+
+td, th {
+	text-align: left;
+	border: 1px solid #999;
+	padding: 0.5rem;
+	border-spacing: 0.5rem;
+	border-collapse: collapse;
+}
