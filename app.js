@@ -28,5 +28,12 @@ function Book(title, author, pages, id, read) {
 }
 var book1 = new Book("javascript funktioner", "Johan Hellberg", 900, 1, true);
 console.log(book1);
-bookParagraph === null || bookParagraph === void 0 ? void 0 : bookParagraph.textContent = book1.title;
-booksBody === null || booksBody === void 0 ? void 0 : booksBody.innerHTML = "\n<tr>\n\t<td> ".concat(book1.title, " </td>\n\t<td> ").concat(book1.author, " </td>\n\t<td> ").concat(book1.pages, " </td>\n\t<td> ").concat(book1.read, " </td>\n</tr>\n<tr>\n\t<td> ").concat(book1.title, " </td>\n\t<td> ").concat(book1.author, " </td>\n\t<td> ").concat(book1.pages, " </td>\n\t<td> ").concat(book1.read, " </td>\n</tr>\n<tr>\n\t<td> ").concat(book1.title, " </td>\n\t<td> ").concat(book1.author, " </td>\n\t<td> ").concat(book1.pages, " </td>\n\t<td> ").concat(book1.read, " </td>\n</tr>\n<tr>\n\t<td> ").concat(book1.title, " </td>\n\t<td> ").concat(book1.author, " </td>\n\t<td> ").concat(book1.pages, " </td>\n\t<td> ").concat(book1.read, " </td>\n</tr>\n\n");
+// example how to display data with .map
+// https://stackoverflow.com/questions/14643617/create-table-using-javascript
+var data = [{ Name: 'Sydney', Day: 'Monday', Time: '10:00AM' }, { Name: 'New York', Day: 'Monday', Time: '11:00AM' },]; // any json data or array of objects
+var tabelData = data.map(function (value) {
+    return ("<tr>\n\t<td> ".concat(value.Name, " </td>\n\t<td> ").concat(value.Day, " </td>\n\t<td> ").concat(value.Time, " </td>\n\t<td> ").concat(value.Time, " </td>\n</tr>"));
+}).join('');
+booksBody === null || booksBody === void 0 ? void 0 : booksBody.innerHTML = tabelData;
+// bookParagraph?.textContent = book1.title
+var book1content = "\n<tr>\n\t<td> ".concat(book1.title, " </td>\n\t<td> ").concat(book1.author, " </td>\n\t<td> ").concat(book1.pages, " </td>\n\t<td> ").concat(book1.read, " </td>\n</tr>");

@@ -36,32 +36,59 @@ function Book(this:any, title:string, author:string, pages:number, id:number, re
 let book1 = new Book("javascript funktioner", "Johan Hellberg", 900, 1, true)
 console.log(book1)
 
-bookParagraph?.textContent = book1.title
+// example how to display data with .map
+// https://stackoverflow.com/questions/14643617/create-table-using-javascript
+const data = [{Name:'Sydney', Day: 'Monday', Time: '10:00AM'},{Name:'New York', Day: 'Monday',Time: '11:00AM'},]; // any json data or array of objects
 
-booksBody?.innerHTML = `
-<tr>
-	<td> ${book1.title} </td>
-	<td> ${book1.author} </td>
-	<td> ${book1.pages} </td>
-	<td> ${book1.read} </td>
-</tr>
-<tr>
-	<td> ${book1.title} </td>
-	<td> ${book1.author} </td>
-	<td> ${book1.pages} </td>
-	<td> ${book1.read} </td>
-</tr>
-<tr>
-	<td> ${book1.title} </td>
-	<td> ${book1.author} </td>
-	<td> ${book1.pages} </td>
-	<td> ${book1.read} </td>
-</tr>
-<tr>
-	<td> ${book1.title} </td>
-	<td> ${book1.author} </td>
-	<td> ${book1.pages} </td>
-	<td> ${book1.read} </td>
-</tr>
+const tabelData = data.map(value => {
+	return (
+		`<tr>
+	<td> ${value.Name} </td>
+	<td> ${value.Day} </td>
+	<td> ${value.Time} </td>
+	<td> ${value.Time} </td>
+</tr>`
+	);
+}).join('');
 
-`
+booksBody?.innerHTML = tabelData
+
+
+// bookParagraph?.textContent = book1.title
+
+let book1content = `
+<tr>
+	<td> ${book1.title} </td>
+	<td> ${book1.author} </td>
+	<td> ${book1.pages} </td>
+	<td> ${book1.read} </td>
+</tr>`
+
+
+// booksBody?.innerHTML = `
+// <tr>
+// 	<td> ${book1.title} </td>
+// 	<td> ${book1.author} </td>
+// 	<td> ${book1.pages} </td>
+// 	<td> ${book1.read} </td>
+// </tr>
+// <tr>
+// 	<td> ${book1.title} </td>
+// 	<td> ${book1.author} </td>
+// 	<td> ${book1.pages} </td>
+// 	<td> ${book1.read} </td>
+// </tr>
+// <tr>
+// 	<td> ${book1.title} </td>
+// 	<td> ${book1.author} </td>
+// 	<td> ${book1.pages} </td>
+// 	<td> ${book1.read} </td>
+// </tr>
+// <tr>
+// 	<td> ${book1.title} </td>
+// 	<td> ${book1.author} </td>
+// 	<td> ${book1.pages} </td>
+// 	<td> ${book1.read} </td>
+// </tr>
+
+// `
