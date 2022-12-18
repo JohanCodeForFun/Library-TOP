@@ -31,7 +31,7 @@
               type="button"
               class="btn btn-success"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              data-bs-target="#modal"
             >Add book
             </button>
           </form>
@@ -41,15 +41,15 @@
       <!-- Modal -->
       <div
         class="modal fade"
-        id="exampleModal"
+        id="modal"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="modalLabel"
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+              <h1 class="modal-title fs-5" id="modalLabel">
                 Add Book
               </h1>
               <button
@@ -62,7 +62,39 @@
             <div class="modal-body">
 
 							
-							...
+							<div class="container container-fluid">
+								<form class="needs-validation" novalidate>
+									<div class="form-input">
+										<label for="title" class="form-label">Add title</label>
+										<input
+											form="title"
+											class="form-control"
+											id="inputTitle"
+											type="text"
+											placeholder="add title"
+											required
+										/>
+										<label for="author" class="form-label">Add author</label>
+										<input
+											for="author"
+											class="form-control"
+											id="inputAuthor"
+											type="text"
+											placeholder="add author"
+											required
+										/>
+										<label for="pages" class="form-label">Add Number of pages</label>
+										<input
+											for="pages"
+											class="form-control"
+											id="inputPages"
+											type="text"
+											placeholder="add number of pages"
+											required
+										/>
+									</div>
+								</form>
+							</div>
 
 
 						</div>
@@ -74,8 +106,8 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
-                Add book
+              <button id="submitBook" type="button" class="btn btn-success"  data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Book successfully added!">
+                Add book to library
               </button>
             </div>
           </div>
@@ -84,51 +116,16 @@
 
       <section id="libraryContent">
         <div class="container container-fluid">
-          <form action="">
-            <div class="form-input">
-              <label for="title" class="form-label">Add title</label>
-              <input
-                form="title"
-                class="form-control"
-                id="inputTitle"
-                type="text"
-                placeholder="add title"
-              />
-              <label for="author" class="form-label">Add author</label>
-              <input
-                for="author"
-                class="form-control"
-                id="inputAuthor"
-                type="text"
-                placeholder="add author"
-              />
-              <label for="pages" class="form-label">Add Number of pages</label>
-              <input
-                for="pages"
-                class="form-control"
-                id="inputPages"
-                type="text"
-                placeholder="add number of pages"
-              />
-              <input
-                id="submitBook"
-                class="btn btn-primary"
-                type="button"
-                value="Add book to Library"
-              />
-              <p id="bookParagraph"></p>
-            </div>
-          </form>
-
           <section id="booksAdded">
+						<h3>Books in your library:</h3>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Author</th>
-                  <th scope="col">Pages</th>
-                  <th scope="col">Read</th>
+                  <th scope="col">Id <img src="img/chevron-down-box.png" alt="sort img"></th>
+                  <th scope="col">Title<img src="img/chevron-up-box-outline.png" alt="sort img"></th>
+                  <th scope="col">Author<img src="img/chevron-up-box-outline.png" alt="sort img"></th>
+                  <th scope="col">Pages<img src="img/chevron-up-box-outline.png" alt="sort img"></th>
+                  <th scope="col">Read<img src="img/chevron-up-box-outline.png" alt="sort img"></th>
                   <th scope="col">Remove</th>
                 </tr>
               </thead>

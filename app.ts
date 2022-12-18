@@ -1,9 +1,9 @@
 'use strict';
 
 let myLibrary = [
-	{title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '1', read: true},
-	{title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '2', read: true},
-	{title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '3', read: true},
+	{title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '0', read: true},
+	{title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '1', read: true},
+	{title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '2', read: true},
 ];
 
 const inputTitle = document.querySelector('#inputTitle');
@@ -11,7 +11,17 @@ const inputAuthor = document.querySelector('#inputAuthor');
 const inputPages = document.querySelector('#inputPages');
 const bookParagraph = document.querySelector('#bookParagraph');
 const submitButton = document.querySelector('#submitBook');
+
+
+const removeBookButton = document.querySelector(`#remove${myLibrary[0].id}`)
+removeBookButton?.addEventListener('click',() => console.log('click'))
+
+
 const booksBody = document.querySelector('#booksBody');
+
+// initialize popovers for modal, succesfully add book to list
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
 
 const loadLibrary = () => {
@@ -29,7 +39,7 @@ const tabelData = myLibrary.map(value => {
 </label>
 </div>
 	</td>
-	<td> <button class="btn btn-danger">Remove</button> </td>
+	<td> <button id="remove${value.id}" class="btn btn-danger">Remove</button> </td>
 </tr>`
 	);
 }).join('');
@@ -37,6 +47,10 @@ const tabelData = myLibrary.map(value => {
 booksBody?.innerHTML = tabelData
 }
 loadLibrary();
+
+const removeBook = () => {
+
+}
 
 
 function Book(this:any, title:string, author:string, pages:number, id:number, read:boolean) {
