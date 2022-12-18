@@ -1,3 +1,4 @@
+'use strict';
 var myLibrary = [];
 var inputTitle = document.querySelector('#inputTitle');
 var inputAuthor = document.querySelector('#inputAuthor');
@@ -14,13 +15,15 @@ var addBookToLibrary = function () {
     // console.log(book1)
 };
 submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener('click', addBookToLibrary);
-function Book(title, author) {
-    this.title = inputTitle === null || inputTitle === void 0 ? void 0 : inputTitle.value,
-        this.author = inputAuthor === null || inputAuthor === void 0 ? void 0 : inputAuthor.value,
+function Book(title, author, pages) {
+    this.title = title, // = inputTitle?.value,
+        this.author = author, // = inputAuthor?.value,
         this.id,
-        this.pages = inputPages === null || inputPages === void 0 ? void 0 : inputPages.value,
-        this.read;
+        this.pages = pages; // = inputPages?.value,
+    this.read;
     this.bookInfo = function () {
         return; // ... 
     };
 }
+var book1 = new Book("javascript funktioner", "Johan Hellberg", 900);
+console.log(book1);

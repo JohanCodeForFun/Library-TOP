@@ -1,3 +1,5 @@
+'use strict';
+
 let myLibrary = [];
 
 const inputTitle = document.querySelector('#inputTitle');
@@ -18,14 +20,17 @@ const addBookToLibrary = () => {
 }
 
 submitButton?.addEventListener('click', addBookToLibrary)
-function Book(this:any, title:string, author:string) {
-	this.title = inputTitle?.value,
-	this.author = inputAuthor?.value,
+function Book(this:any, title:string, author:string, pages:number) {
+	this.title = title, // = inputTitle?.value,
+	this.author = author, // = inputAuthor?.value,
 	this.id,
-	this.pages = inputPages?.value,
+	this.pages = pages // = inputPages?.value,
 	this.read
 
 	this.bookInfo = function() {
 		return // ... 
 	}
 }
+
+let book1 = new Book("javascript funktioner", "Johan Hellberg", 900)
+console.log(book1)
