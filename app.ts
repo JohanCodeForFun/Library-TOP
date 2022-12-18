@@ -33,20 +33,26 @@ function Book(this:any, title:string, author:string, pages:number, id:number, re
 	}
 }
 
-let book1 = new Book("javascript funktioner", "Johan Hellberg", 900, 1, true)
+let book1 = new Book("javascript Funktioner", "Johan Hellberg", 900, 1, true)
 console.log(book1)
+let book2 = new Book("javascript OOP", "Johan Hellberg", 300, 1, true)
+console.log(book1)
+let book3 = new Book("javascript ES6", "Johan Hellberg", 500, 1, true)
+console.log(book1)
+
+let bookData = [book1, book2, book3];
 
 // example how to display data with .map
 // https://stackoverflow.com/questions/14643617/create-table-using-javascript
-const data = [{Name:'Sydney', Day: 'Monday', Time: '10:00AM'},{Name:'New York', Day: 'Monday',Time: '11:00AM'},]; // any json data or array of objects
+const data = [{Name:'Sydney', Day: 'Monday', Time: '10:00AM'},{Name:'New York', Day: 'Monday',Time: '11:00AM'}, {Name:'Sydney', Day: 'Monday', Time: '10:00AM'},{Name:'New York', Day: 'Monday',Time: '11:00AM'}, {Name:'Sydney', Day: 'Monday', Time: '10:00AM'},{Name:'New York', Day: 'Monday',Time: '11:00AM'},]; // any json data or array of objects
 
-const tabelData = data.map(value => {
+const tabelData = bookData.map(value => {
 	return (
 		`<tr>
-	<td> ${value.Name} </td>
-	<td> ${value.Day} </td>
-	<td> ${value.Time} </td>
-	<td> ${value.Time} </td>
+	<td> ${value.title} </td>
+	<td> ${value.author} </td>
+	<td> ${value.pages} </td>
+	<td> ${value.read} </td>
 </tr>`
 	);
 }).join('');

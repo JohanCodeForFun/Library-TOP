@@ -26,13 +26,18 @@ function Book(title, author, pages, id, read) {
         return; // ... 
     };
 }
-var book1 = new Book("javascript funktioner", "Johan Hellberg", 900, 1, true);
+var book1 = new Book("javascript Funktioner", "Johan Hellberg", 900, 1, true);
 console.log(book1);
+var book2 = new Book("javascript OOP", "Johan Hellberg", 300, 1, true);
+console.log(book1);
+var book3 = new Book("javascript ES6", "Johan Hellberg", 500, 1, true);
+console.log(book1);
+var bookData = [book1, book2, book3];
 // example how to display data with .map
 // https://stackoverflow.com/questions/14643617/create-table-using-javascript
-var data = [{ Name: 'Sydney', Day: 'Monday', Time: '10:00AM' }, { Name: 'New York', Day: 'Monday', Time: '11:00AM' },]; // any json data or array of objects
-var tabelData = data.map(function (value) {
-    return ("<tr>\n\t<td> ".concat(value.Name, " </td>\n\t<td> ").concat(value.Day, " </td>\n\t<td> ").concat(value.Time, " </td>\n\t<td> ").concat(value.Time, " </td>\n</tr>"));
+var data = [{ Name: 'Sydney', Day: 'Monday', Time: '10:00AM' }, { Name: 'New York', Day: 'Monday', Time: '11:00AM' }, { Name: 'Sydney', Day: 'Monday', Time: '10:00AM' }, { Name: 'New York', Day: 'Monday', Time: '11:00AM' }, { Name: 'Sydney', Day: 'Monday', Time: '10:00AM' }, { Name: 'New York', Day: 'Monday', Time: '11:00AM' },]; // any json data or array of objects
+var tabelData = bookData.map(function (value) {
+    return ("<tr>\n\t<td> ".concat(value.title, " </td>\n\t<td> ").concat(value.author, " </td>\n\t<td> ").concat(value.pages, " </td>\n\t<td> ").concat(value.read, " </td>\n</tr>"));
 }).join('');
 booksBody === null || booksBody === void 0 ? void 0 : booksBody.innerHTML = tabelData;
 // bookParagraph?.textContent = book1.title
