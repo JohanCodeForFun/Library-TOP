@@ -4,7 +4,14 @@ html {
 	box-sizing: border-box;
 }
 
+#navbar {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
 #libraryContent {
+	margin-top: 1rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;

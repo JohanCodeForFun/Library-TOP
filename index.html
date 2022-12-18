@@ -1,48 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Library App</title>
-	<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-	<section id="libraryContent">
-		<div>
-			<h1>Library</h1>
-			<form action="">
-				<div class="form-input">
-					<label for="title">Add title</label>
-					<input form="title" id="inputTitle" type="text" placeholder="add title">
-					<label for="author">Add author</label>
-					<input for="author" id="inputAuthor" type="text" placeholder="add author">
-					<label for="pages">Add Number of pages</label>
-					<input for="pages" id="inputPages" type="text" placeholder="add number of pages">
-					<input id="submitBook" type="button" value="Add book to Library">
-					<p id="bookParagraph"></p>
-				</div>
-				
-			</form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library App</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="container container-fluid">
+      <nav class="navbar bg-light">
+        <div class="container container-fluid">
+          <a class="navbar-brand">Library App</a>
+          <form class="d-flex" role="search">
+            <!-- Button trigger modal -->
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >Add book
+            </button>
+          </form>
+        </div>
+      </nav>
 
-			<section id="booksAdded">
-				<table>
-					<thead>
-						<th>Title</th>
-						<th>Author</th>
-						<th>Pages</th>
-						<th>Read</th>
-					</thead>
-					<tbody id="booksBody">
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">
+                Add Book
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
 
-					</tbody>
-				</table>
-			</section>
-			
-		</div>
-		<div>
-		</div>
-	</section>
-	<script src="app.js"></script>
-</body>
+							
+							...
+
+
+						</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Add book
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="libraryContent">
+        <div class="container container-fluid">
+          <form action="">
+            <div class="form-input">
+              <label for="title" class="form-label">Add title</label>
+              <input
+                form="title"
+                class="form-control"
+                id="inputTitle"
+                type="text"
+                placeholder="add title"
+              />
+              <label for="author" class="form-label">Add author</label>
+              <input
+                for="author"
+                class="form-control"
+                id="inputAuthor"
+                type="text"
+                placeholder="add author"
+              />
+              <label for="pages" class="form-label">Add Number of pages</label>
+              <input
+                for="pages"
+                class="form-control"
+                id="inputPages"
+                type="text"
+                placeholder="add number of pages"
+              />
+              <input
+                id="submitBook"
+                class="btn btn-primary"
+                type="button"
+                value="Add book to Library"
+              />
+              <p id="bookParagraph"></p>
+            </div>
+          </form>
+
+          <section id="booksAdded">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Pages</th>
+                  <th scope="col">Read</th>
+                  <th scope="col">Remove</th>
+                </tr>
+              </thead>
+              <tbody id="booksBody"></tbody>
+            </table>
+          </section>
+        </div>
+        <div></div>
+      </section>
+    </div>
+  </body>
 </html>
