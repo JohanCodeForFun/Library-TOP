@@ -32,6 +32,12 @@ var loadLibrary = function () {
 };
 loadLibrary();
 var removeBook = function () {
+    // remove book by clicking remove button
+    // function, myLibrary.splice(${id}, 1)
+    // forEach button with ${id}, get id value.
+    // then run myLibrary.splice(${id}, 1) to remove that item
+    // then update library app with the new array
+    // by running loadLibrary.
 };
 function Book(title, author, pages, id, read) {
     this.title = title,

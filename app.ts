@@ -49,7 +49,12 @@ booksBody?.innerHTML = tabelData
 loadLibrary();
 
 const removeBook = () => {
-
+	// remove book by clicking remove button
+	// function, myLibrary.splice(${id}, 1)
+	// forEach button with ${id}, get id value.
+	// then run myLibrary.splice(${id}, 1) to remove that item
+	// then update library app with the new array
+	// by running loadLibrary.
 }
 
 
@@ -68,6 +73,7 @@ const addBookToLibrary = () => {
 
 	loadLibrary();
 }
+
 
 // function to listen for input and update live in console.
 submitButton?.addEventListener('click', addBookToLibrary)
