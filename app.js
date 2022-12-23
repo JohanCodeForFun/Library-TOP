@@ -19,6 +19,10 @@ var sortByTitle = document.querySelector('#sort-by-title');
 var sortByAuthor = document.querySelector('#sort-by-author');
 var sortByPages = document.querySelector('#sort-by-pages');
 var sortByRead = document.querySelector('#sort-by-read');
+// const image = document.getElementById('photo') as HTMLImageElement | null;
+// if (image !== null) {
+//   image.src = 'photo.jpg';
+// }
 var booksBody = document.querySelector('#booksBody');
 // initialize popovers for modal, succesfully add book to list
 var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -27,7 +31,7 @@ var loadLibrary = function () {
     var tabelData = myLibrary.map(function (value) {
         return ("<tr>\n\t<th scope=\"row\"> ".concat(value.id, " </th>\n\t<td> ").concat(value.title, " </td>\n\t<td> ").concat(value.author, " </td>\n\t<td> ").concat(value.pages, " </td>\n\t<td> \n\t<div class=\"form-check\">\n<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\">\n<label class=\"form-check-label\" for=\"flexCheckDefault\">\n</label>\n</div>\n\t</td>\n\t<td> <button id=\"removeBtn\" value=\"").concat(value.id, "\" class=\"btn btn-danger\">Remove</button> </td>\n</tr>"));
     }).join('');
-    booksBody === null || booksBody === void 0 ? void 0 : booksBody.innerHTML = tabelData;
+    booksBody.innerHTML = tabelData;
 };
 function Book(title, author, pages, id, read) {
     this.title = title,
@@ -49,9 +53,8 @@ loadLibrary();
 var addBookToLibrary = function () {
     // use findLastId() to find id from myLibrary array
     var lastId = findLastID() + 1;
-    myLibrary.push(new Book("".concat(inputTitle.value), "".concat(inputAuthor.value), "".concat(inputPages.value), "".concat(lastId), true));
+    myLibrary.push(new Book("".concat(inputTitle.value), "".concat(inputAuthor.value), Number("".concat(inputPages.value)), Number("".concat(lastId)), true));
     loadLibrary();
-    updateBtnValue();
 };
 var findLastID = function () {
     var lastId = myLibrary.length - 1;
@@ -72,7 +75,6 @@ var removeBook = function () {
     for (var _i = 0, btns_1 = btns; _i < btns_1.length; _i++) {
         var btn = btns_1[_i];
         btn.addEventListener('click', function () {
-            console.log(this.value);
             myLibrary.splice(this.value, 1);
             loadLibrary();
         });
@@ -107,7 +109,9 @@ sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByTitle.src = "img/chevron-down-box.png", sortByTitle.style.transform = 'rotate(0deg)');
+        });
+        sortByTitle.src = "img/chevron-down-box.png";
+        sortByTitle.style.transform = 'rotate(0deg)';
         loadLibrary();
     }
     else {
@@ -119,7 +123,9 @@ sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByTitle.src = "img/chevron-down-box.png", sortByTitle.style.transform = 'rotate(180deg)');
+        });
+        sortByTitle.src = "img/chevron-down-box.png";
+        sortByTitle.style.transform = 'rotate(180deg)';
         loadLibrary();
     }
 });
@@ -134,7 +140,9 @@ sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEven
                 return 1;
             }
             return 0;
-        }, sortByAuthor.src = "img/chevron-down-box.png", sortByAuthor.style.transform = 'rotate(0deg)');
+        });
+        sortByAuthor.src = "img/chevron-down-box.png";
+        sortByAuthor.style.transform = 'rotate(0deg)';
         loadLibrary();
     }
     else {
@@ -146,7 +154,9 @@ sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEven
                 return 1;
             }
             return 0;
-        }, sortByAuthor.src = "img/chevron-down-box.png", sortByAuthor.style.transform = 'rotate(180deg)');
+        });
+        sortByAuthor.src = "img/chevron-down-box.png";
+        sortByAuthor.style.transform = 'rotate(180deg)';
         loadLibrary();
     }
 });
@@ -161,7 +171,9 @@ sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByPages.src = "img/chevron-down-box.png", sortByPages.style.transform = 'rotate(0deg)');
+        });
+        sortByPages.src = "img/chevron-down-box.png";
+        sortByPages.style.transform = 'rotate(0deg)';
         loadLibrary();
     }
     else {
@@ -173,7 +185,9 @@ sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByPages.src = "img/chevron-down-box.png", sortByPages.style.transform = 'rotate(180deg)');
+        });
+        sortByPages.src = "img/chevron-down-box.png";
+        sortByPages.style.transform = 'rotate(180deg)';
         loadLibrary();
     }
 });
@@ -188,7 +202,9 @@ sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListe
                 return 1;
             }
             return 0;
-        }, sortByRead.src = "img/chevron-down-box.png", sortByRead.style.transform = 'rotate(0deg)');
+        });
+        sortByRead.src = "img/chevron-down-box.png";
+        sortByRead.style.transform = 'rotate(0deg)';
         loadLibrary();
     }
     else {
@@ -200,7 +216,9 @@ sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListe
                 return 1;
             }
             return 0;
-        }, sortByRead.src = "img/chevron-down-box.png", sortByRead.style.transform = 'rotate(180deg)');
+        });
+        sortByRead.src = "img/chevron-down-box.png";
+        sortByRead.style.transform = 'rotate(180deg)';
         loadLibrary();
     }
 });

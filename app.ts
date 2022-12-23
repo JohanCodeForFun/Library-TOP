@@ -1,18 +1,26 @@
 'use strict';
 
-let myLibrary = [];
+let myLibrary: myLibrary[] = [];
+declare let bootstrap: any;
 
-const inputTitle = document.querySelector('#inputTitle');
-const inputAuthor = document.querySelector('#inputAuthor');
-const inputPages = document.querySelector('#inputPages');
-const bookParagraph = document.querySelector('#bookParagraph');
-const submitButton = document.querySelector('#submitBook');
+const inputTitle = (<HTMLInputElement>document.querySelector('#inputTitle'));
+const inputAuthor = (<HTMLInputElement>document.querySelector('#inputAuthor'));
+const inputPages = (<HTMLInputElement>document.querySelector('#inputPages'));
+const bookParagraph = (<HTMLInputElement>document.querySelector('#bookParagraph'));
+const submitButton = (<HTMLInputElement>document.querySelector('#submitBook'));
 
-const sortById = document.querySelector('#sort-by-id')
-const sortByTitle = document.querySelector('#sort-by-title')
-const sortByAuthor = document.querySelector('#sort-by-author')
-const sortByPages = document.querySelector('#sort-by-pages')
-const sortByRead = document.querySelector('#sort-by-read')
+const sortById = document.querySelector<HTMLElement>('#sort-by-id') as HTMLImageElement;
+const sortByTitle = document.querySelector<HTMLElement>('#sort-by-title') as HTMLImageElement;
+const sortByAuthor = document.querySelector<HTMLElement>('#sort-by-author') as HTMLImageElement;
+const sortByPages = document.querySelector<HTMLElement>('#sort-by-pages') as HTMLImageElement;
+const sortByRead = document.querySelector<HTMLElement>('#sort-by-read') as HTMLImageElement;
+
+// const image = document.getElementById('photo') as HTMLImageElement | null;
+
+// if (image !== null) {
+//   image.src = 'photo.jpg';
+// }
+
 
 
 const booksBody = document.querySelector('#booksBody');
@@ -42,7 +50,7 @@ const tabelData = myLibrary.map(value => {
 	);
 }).join('');
 
-booksBody?.innerHTML = tabelData
+booksBody.innerHTML = tabelData;
 }
 
 function Book(this:any, title:string, author:string, pages:number, id:number, read:boolean) {
@@ -69,9 +77,8 @@ const addBookToLibrary = () => {
 	// use findLastId() to find id from myLibrary array
 	let lastId = findLastID() + 1;
 
-	myLibrary.push(new Book(`${inputTitle.value}`, `${inputAuthor.value}`, `${inputPages.value}`, `${lastId}`, true))
+	myLibrary.push(new Book(`${inputTitle.value}`, `${inputAuthor.value}`, Number(`${inputPages.value}`), Number(`${lastId}`), true))
 	loadLibrary();
-	updateBtnValue();
 }
 
 const findLastID = () => {
@@ -86,7 +93,7 @@ submitButton?.addEventListener('click', addBookToLibrary)
 
 // remove book function
 const btns = document.querySelectorAll('#removeBtn');
-
+ 
 const removeBook = () => {
 	// remove book by clicking remove button
 	// function, myLibrary.splice(${id}, 1)
@@ -97,7 +104,6 @@ const removeBook = () => {
 
 	for (const btn of btns) {
 		btn.addEventListener('click', function() {
-			console.log(this.value)
 
 			myLibrary.splice(this.value, 1);
 			loadLibrary();
@@ -135,7 +141,7 @@ sortByTitle?.addEventListener('click', () => {
 			if (a.title < b.title) { return -1; }
 			if (a.title > b.title) { return 1 }
 			return 0;
-		}
+		})
 
 		sortByTitle.src = "img/chevron-down-box.png"
 		sortByTitle.style.transform = 'rotate(0deg)';
@@ -146,7 +152,7 @@ sortByTitle?.addEventListener('click', () => {
 			if (a.title > b.title) { return -1; }
 			if (a.title < b.title) { return 1 }
 			return 0;
-		}
+		})
 		
 		sortByTitle.src = "img/chevron-down-box.png"
 		sortByTitle.style.transform = 'rotate(180deg)';
@@ -163,7 +169,7 @@ sortByAuthor?.addEventListener('click', () => {
 			if (a.author < b.author) { return -1; }
 			if (a.author > b.author) { return 1 }
 			return 0;
-		}
+		})
 
 		sortByAuthor.src = "img/chevron-down-box.png"
 		sortByAuthor.style.transform = 'rotate(0deg)';
@@ -174,7 +180,7 @@ sortByAuthor?.addEventListener('click', () => {
 			if (a.author > b.author) { return -1; }
 			if (a.author < b.author) { return 1 }
 			return 0;
-		}
+		})
 		
 		sortByAuthor.src = "img/chevron-down-box.png"
 		sortByAuthor.style.transform = 'rotate(180deg)';
@@ -191,7 +197,7 @@ sortByPages?.addEventListener('click', () => {
 			if (a.pages < b.pages) { return -1; }
 			if (a.pages > b.pages) { return 1 }
 			return 0;
-		}
+		})
 
 		sortByPages.src = "img/chevron-down-box.png"
 		sortByPages.style.transform = 'rotate(0deg)';
@@ -202,7 +208,7 @@ sortByPages?.addEventListener('click', () => {
 			if (a.pages > b.pages) { return -1; }
 			if (a.pages < b.pages) { return 1 }
 			return 0;
-		}
+		})
 		
 		sortByPages.src = "img/chevron-down-box.png"
 		sortByPages.style.transform = 'rotate(180deg)';
@@ -220,7 +226,7 @@ sortByRead?.addEventListener('click', () => {
 			if (a.read < b.read) { return -1; }
 			if (a.read > b.read) { return 1 }
 			return 0;
-		}
+		})
 
 		sortByRead.src = "img/chevron-down-box.png"
 		sortByRead.style.transform = 'rotate(0deg)';
@@ -231,7 +237,7 @@ sortByRead?.addEventListener('click', () => {
 			if (a.read > b.read) { return -1; }
 			if (a.read < b.read) { return 1 }
 			return 0;
-		}
+		})
 		
 		sortByRead.src = "img/chevron-down-box.png"
 		sortByRead.style.transform = 'rotate(180deg)';
