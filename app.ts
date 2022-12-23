@@ -8,6 +8,12 @@ const inputPages = document.querySelector('#inputPages');
 const bookParagraph = document.querySelector('#bookParagraph');
 const submitButton = document.querySelector('#submitBook');
 
+const sortById = document.querySelector('#sort-by-id')
+const sortByTitle = document.querySelector('#sort-by-title')
+const sortByAuthor = document.querySelector('#sort-by-author')
+const sortByPages = document.querySelector('#sort-by-pages')
+const sortByRead = document.querySelector('#sort-by-read')
+
 
 const booksBody = document.querySelector('#booksBody');
 
@@ -99,5 +105,15 @@ const updateBtnValue = () => {
 }
 updateBtnValue();
 
-// const removeBookButton = document.querySelector(`#remove${myLibrary.forEach(bookId => bookId.id)}`)
-// removeBookButton?.addEventListener('click',() => console.log('click'))
+// const sortByIdReverse = (a, b) => b.id - a.id;
+
+sortById?.addEventListener('click', () => {
+	myLibrary.sort((a, b) => b.id - a.id)
+	sortById.style.transform = 'rotate(180deg)';
+	loadLibrary();
+})
+
+sortByTitle?.addEventListener('click', () => {
+	myLibrary.sort((a, b) => a.title - b.title)
+	loadLibrary();
+})

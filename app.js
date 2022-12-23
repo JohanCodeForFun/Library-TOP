@@ -14,6 +14,11 @@ var inputAuthor = document.querySelector('#inputAuthor');
 var inputPages = document.querySelector('#inputPages');
 var bookParagraph = document.querySelector('#bookParagraph');
 var submitButton = document.querySelector('#submitBook');
+var sortById = document.querySelector('#sort-by-id');
+var sortByTitle = document.querySelector('#sort-by-title');
+var sortByAuthor = document.querySelector('#sort-by-author');
+var sortByPages = document.querySelector('#sort-by-pages');
+var sortByRead = document.querySelector('#sort-by-read');
 var booksBody = document.querySelector('#booksBody');
 // initialize popovers for modal, succesfully add book to list
 var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -72,3 +77,13 @@ var updateBtnValue = function () {
     }
 };
 updateBtnValue();
+// const sortByIdReverse = (a, b) => b.id - a.id;
+sortById === null || sortById === void 0 ? void 0 : sortById.addEventListener('click', function () {
+    myLibrary.sort(function (a, b) { return b.id - a.id; });
+    sortById.style.transform = 'rotate(180deg)';
+    loadLibrary();
+});
+sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventListener('click', function () {
+    myLibrary.sort(function (a, b) { return a.title - b.title; });
+    loadLibrary();
+});
