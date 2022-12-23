@@ -1,20 +1,12 @@
 'use strict';
 
-let myLibrary = [
-	{title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '0', read: true},
-	{title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '1', read: true},
-	{title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '2', read: true},
-];
+let myLibrary = [];
 
 const inputTitle = document.querySelector('#inputTitle');
 const inputAuthor = document.querySelector('#inputAuthor');
 const inputPages = document.querySelector('#inputPages');
 const bookParagraph = document.querySelector('#bookParagraph');
 const submitButton = document.querySelector('#submitBook');
-
-
-const removeBookButton = document.querySelector(`#remove${myLibrary[0].id}`)
-removeBookButton?.addEventListener('click',() => console.log('click'))
 
 
 const booksBody = document.querySelector('#booksBody');
@@ -39,14 +31,14 @@ const tabelData = myLibrary.map(value => {
 </label>
 </div>
 	</td>
-	<td> <button id="remove${value.id}" class="btn btn-danger">Remove</button> </td>
+	<td> <button id="removeBtn" value="${value.id}" class="btn btn-danger">Remove</button> </td>
 </tr>`
 	);
 }).join('');
 
 booksBody?.innerHTML = tabelData
 }
-loadLibrary();
+
 
 const removeBook = () => {
 	// remove book by clicking remove button
@@ -66,14 +58,46 @@ function Book(this:any, title:string, author:string, pages:number, id:number, re
 	this.read = read
 }
 
-const addBookToLibrary = () => {
-	let id = 1;
+// {title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '0', read: true},
+// {title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '1', read: true},
+// {title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '2', read: true},
 
-	myLibrary.push(new Book(`${inputTitle.value}`, `${inputAuthor.value}`, `${inputPages.value}`, `${id}`, true))
-
-	loadLibrary();
+const fillLibrary = () => {
+	myLibrary.push(new Book('Zero To One', 'Peter Thiel', 210, 0, true));
+	myLibrary.push(new Book('Hackers & Painters', 'Paul Graham', 258, 1, true));
+	myLibrary.push(new Book('Computer Science Distilled', 'Wladston Ferreira Filho', 168, 2, false));
 }
+fillLibrary();
+loadLibrary();
+
+const addBookToLibrary = () => {
+	let lastId = findLastID() + 1;
+
+	myLibrary.push(new Book(`${inputTitle.value}`, `${inputAuthor.value}`, `${inputPages.value}`, `${lastId}`, true))
+	loadLibrary();
+	updateBtnValue();
+}
+
+const findLastID = () => {
+	let lastId = myLibrary.length - 1;
+	return lastId;
+}
+findLastID()
 
 
 // function to listen for input and update live in console.
 submitButton?.addEventListener('click', addBookToLibrary)
+
+const btns = document.querySelectorAll('#removeBtn');
+
+const updateBtnValue = () => {
+	for (const btn of btns) {
+		btn.addEventListener('click', function() {
+			console.log(this.value)
+		})
+	}
+}
+updateBtnValue();
+
+// const removeBookButton = document.querySelector(`#remove${myLibrary.forEach(bookId => bookId.id)}`)
+// removeBookButton?.addEventListener('click',() => console.log('click'))
