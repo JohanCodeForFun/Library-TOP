@@ -77,6 +77,7 @@ fillLibrary();
 loadLibrary();
 
 const addBookToLibrary = () => {
+	// use findLastId() to find id from myLibrary array
 	let lastId = findLastID() + 1;
 
 	myLibrary.push(new Book(`${inputTitle.value}`, `${inputAuthor.value}`, `${inputPages.value}`, `${lastId}`, true))
@@ -128,6 +129,106 @@ sortById?.addEventListener('click', () => {
 })
 
 sortByTitle?.addEventListener('click', () => {
-	myLibrary.sort((a, b) => a.title - b.title)
-	loadLibrary();
+	active = !active	
+
+	if (active) {
+		myLibrary.sort((a, b) => {
+
+			if (a.title < b.title) { return -1; }
+			if (a.title > b.title) { return 1 }
+			return 0;
+		}
+
+		sortByTitle.src = "img/chevron-down-box.png"
+		loadLibrary();
+	} else {
+		myLibrary.sort((a, b) => {
+			
+			if (a.title > b.title) { return -1; }
+			if (a.title < b.title) { return 1 }
+			return 0;
+		}
+		
+		sortByTitle.src = "img/chevron-up-box-outline.png"
+		loadLibrary();
+	}
+})
+
+sortByAuthor?.addEventListener('click', () => {
+	active = !active	
+
+	if (active) {
+		myLibrary.sort((a, b) => {
+
+			if (a.author < b.author) { return -1; }
+			if (a.author > b.author) { return 1 }
+			return 0;
+		}
+
+		sortByAuthor.src = "img/chevron-down-box.png"
+		loadLibrary();
+	} else {
+		myLibrary.sort((a, b) => {
+			
+			if (a.author > b.author) { return -1; }
+			if (a.author < b.author) { return 1 }
+			return 0;
+		}
+		
+		sortByAuthor.src = "img/chevron-up-box-outline.png"
+		loadLibrary();
+	}
+})
+
+sortByPages?.addEventListener('click', () => {
+	active = !active	
+
+	if (active) {
+		myLibrary.sort((a, b) => {
+
+			if (a.pages < b.pages) { return -1; }
+			if (a.pages > b.pages) { return 1 }
+			return 0;
+		}
+
+		sortByPages.src = "img/chevron-down-box.png"
+		loadLibrary();
+	} else {
+		myLibrary.sort((a, b) => {
+			
+			if (a.pages > b.pages) { return -1; }
+			if (a.pages < b.pages) { return 1 }
+			return 0;
+		}
+		
+		sortByPages.src = "img/chevron-up-box-outline.png"
+		loadLibrary();
+	}
+})
+
+
+sortByRead?.addEventListener('click', () => {
+	active = !active	
+
+	if (active) {
+		myLibrary.sort((a, b) => {
+
+			if (a.read < b.read) { return -1; }
+			if (a.read > b.read) { return 1 }
+			return 0;
+		}
+
+		sortByRead.src = "img/chevron-down-box.png"
+		loadLibrary();
+	} else {
+		myLibrary.sort((a, b) => {
+			
+			if (a.read > b.read) { return -1; }
+			if (a.read < b.read) { return 1 }
+			return 0;
+		}
+		
+		sortByRead.src = "img/chevron-up-box-outline.png"
+		loadLibrary();
+	}
 })
