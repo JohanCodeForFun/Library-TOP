@@ -29,14 +29,6 @@ var loadLibrary = function () {
     }).join('');
     booksBody === null || booksBody === void 0 ? void 0 : booksBody.innerHTML = tabelData;
 };
-var removeBook = function () {
-    // remove book by clicking remove button
-    // function, myLibrary.splice(${id}, 1)
-    // forEach button with ${id}, get id value.
-    // then run myLibrary.splice(${id}, 1) to remove that item
-    // then update library app with the new array
-    // by running loadLibrary.
-};
 function Book(title, author, pages, id, read) {
     this.title = title,
         this.author = author,
@@ -68,17 +60,25 @@ var findLastID = function () {
 findLastID();
 // function to listen for input and update live in console.
 submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener('click', addBookToLibrary);
+// remove book function
 var btns = document.querySelectorAll('#removeBtn');
-var updateBtnValue = function () {
+var removeBook = function () {
+    // remove book by clicking remove button
+    // function, myLibrary.splice(${id}, 1)
+    // forEach button with ${id}, get id value.
+    // then run myLibrary.splice(${id}, 1) to remove that item
+    // then update library app with the new array
+    // by running loadLibrary.
     for (var _i = 0, btns_1 = btns; _i < btns_1.length; _i++) {
         var btn = btns_1[_i];
         btn.addEventListener('click', function () {
             console.log(this.value);
+            myLibrary.splice(this.value, 1);
+            loadLibrary();
         });
     }
 };
-updateBtnValue();
-// const sortByIdReverse = (a, b) => b.id - a.id;
+removeBook();
 // sort functions
 var active = false;
 sortById === null || sortById === void 0 ? void 0 : sortById.addEventListener('click', function () {
@@ -107,7 +107,8 @@ sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByTitle.src = "img/chevron-down-box.png", loadLibrary());
+        }, sortByTitle.src = "img/chevron-down-box.png", sortByTitle.style.transform = 'rotate(0deg)');
+        loadLibrary();
     }
     else {
         myLibrary.sort(function (a, b) {
@@ -118,7 +119,8 @@ sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByTitle.src = "img/chevron-up-box-outline.png", loadLibrary());
+        }, sortByTitle.src = "img/chevron-down-box.png", sortByTitle.style.transform = 'rotate(180deg)');
+        loadLibrary();
     }
 });
 sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEventListener('click', function () {
@@ -132,7 +134,8 @@ sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEven
                 return 1;
             }
             return 0;
-        }, sortByAuthor.src = "img/chevron-down-box.png", loadLibrary());
+        }, sortByAuthor.src = "img/chevron-down-box.png", sortByAuthor.style.transform = 'rotate(0deg)');
+        loadLibrary();
     }
     else {
         myLibrary.sort(function (a, b) {
@@ -143,7 +146,8 @@ sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEven
                 return 1;
             }
             return 0;
-        }, sortByAuthor.src = "img/chevron-up-box-outline.png", loadLibrary());
+        }, sortByAuthor.src = "img/chevron-down-box.png", sortByAuthor.style.transform = 'rotate(180deg)');
+        loadLibrary();
     }
 });
 sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventListener('click', function () {
@@ -157,7 +161,8 @@ sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByPages.src = "img/chevron-down-box.png", loadLibrary());
+        }, sortByPages.src = "img/chevron-down-box.png", sortByPages.style.transform = 'rotate(0deg)');
+        loadLibrary();
     }
     else {
         myLibrary.sort(function (a, b) {
@@ -168,7 +173,8 @@ sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventLi
                 return 1;
             }
             return 0;
-        }, sortByPages.src = "img/chevron-up-box-outline.png", loadLibrary());
+        }, sortByPages.src = "img/chevron-down-box.png", sortByPages.style.transform = 'rotate(180deg)');
+        loadLibrary();
     }
 });
 sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListener('click', function () {
@@ -182,7 +188,8 @@ sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListe
                 return 1;
             }
             return 0;
-        }, sortByRead.src = "img/chevron-down-box.png", loadLibrary());
+        }, sortByRead.src = "img/chevron-down-box.png", sortByRead.style.transform = 'rotate(0deg)');
+        loadLibrary();
     }
     else {
         myLibrary.sort(function (a, b) {
@@ -193,6 +200,7 @@ sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListe
                 return 1;
             }
             return 0;
-        }, sortByRead.src = "img/chevron-up-box-outline.png", loadLibrary());
+        }, sortByRead.src = "img/chevron-down-box.png", sortByRead.style.transform = 'rotate(180deg)');
+        loadLibrary();
     }
 });
