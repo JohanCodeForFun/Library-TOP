@@ -78,10 +78,22 @@ var updateBtnValue = function () {
 };
 updateBtnValue();
 // const sortByIdReverse = (a, b) => b.id - a.id;
+// sort functions
+var active = false;
 sortById === null || sortById === void 0 ? void 0 : sortById.addEventListener('click', function () {
-    myLibrary.sort(function (a, b) { return b.id - a.id; });
-    sortById.style.transform = 'rotate(180deg)';
-    loadLibrary();
+    active = !active;
+    if (active) {
+        sortById.classList.add('active');
+        myLibrary.sort(function (a, b) { return b.id - a.id; });
+        sortById.style.transform = 'rotate(180deg)';
+        loadLibrary();
+    }
+    else {
+        sortById.classList.remove('active');
+        myLibrary.sort(function (a, b) { return a.id - b.id; });
+        sortById.style.transform = 'rotate(0deg)';
+        loadLibrary();
+    }
 });
 sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventListener('click', function () {
     myLibrary.sort(function (a, b) { return a.title - b.title; });

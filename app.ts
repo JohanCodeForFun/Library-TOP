@@ -107,10 +107,24 @@ updateBtnValue();
 
 // const sortByIdReverse = (a, b) => b.id - a.id;
 
+
+// sort functions
+let active = false
+
 sortById?.addEventListener('click', () => {
-	myLibrary.sort((a, b) => b.id - a.id)
-	sortById.style.transform = 'rotate(180deg)';
-	loadLibrary();
+	active = !active
+
+	if (active) {
+		sortById.classList.add('active')
+		myLibrary.sort((a, b) => b.id - a.id)
+		sortById.style.transform = 'rotate(180deg)';
+		loadLibrary();
+	} else {
+		sortById.classList.remove('active')
+		myLibrary.sort((a, b) => a.id - b.id)
+		sortById.style.transform = 'rotate(0deg)';
+		loadLibrary();
+	}
 })
 
 sortByTitle?.addEventListener('click', () => {
