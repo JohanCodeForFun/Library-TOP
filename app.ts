@@ -47,7 +47,6 @@ const loadLibrary = () => {
   const tabelData = myLibrary
     .map((value) => {
       return `<tr>
-	<th scope="row"> ${value.id} </th>
 	<td> ${value.title} </td>
 	<td> ${value.author} </td>
 	<td> ${value.pages} </td>
@@ -189,8 +188,16 @@ function sortTableByColumn(table, column, asc = true) {
 	table.querySelector(`th:nth-child(${ column + 1 })`).classList.toggle('th-sort-desc', !asc);
 }
 
-sortTableByColumn(document.querySelector('table'), 1, false);
+document.querySelectorAll('.table-sortable th').forEach(headerCell => {
+	headerCell.addEventListener('click', () => {
+		// const tableElement = headerCell.closest('.table');
+		const tableElement = headerCell.parentElement?.parentElement?.parentElement;
+		const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement?.children, headerCell);
+		const currentIsAscending = headerCell.classList.contains('th-sort-asc');
 
+		sortTableByColumn(tableElement, headerIndex, !currentIsAscending)
+	})
+})
 
 // // sort functions
 // let active = false;

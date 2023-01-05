@@ -30,7 +30,7 @@ var popoverList = __spreadArray([], popoverTriggerList, true).map(function (popo
 var loadLibrary = function () {
     var tabelData = myLibrary
         .map(function (value) {
-        return "<tr>\n\t<th scope=\"row\"> ".concat(value.id, " </th>\n\t<td> ").concat(value.title, " </td>\n\t<td> ").concat(value.author, " </td>\n\t<td> ").concat(value.pages, " </td>\n\t<td> \n\t<div class=\"form-check\">\n<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\">\n<label class=\"form-check-label\" for=\"flexCheckDefault\">\n</label>\n</div>\n\t</td>\n\t<td> <button id=\"removeBtn\" value=\"").concat(value.id, "\" class=\"btn btn-danger\">Remove</button> </td>\n</tr>");
+        return "<tr>\n\t<td> ".concat(value.title, " </td>\n\t<td> ").concat(value.author, " </td>\n\t<td> ").concat(value.pages, " </td>\n\t<td> \n\t<div class=\"form-check\">\n<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\">\n<label class=\"form-check-label\" for=\"flexCheckDefault\">\n</label>\n</div>\n\t</td>\n\t<td> <button id=\"removeBtn\" value=\"").concat(value.id, "\" class=\"btn btn-danger\">Remove</button> </td>\n</tr>");
     })
         .join("");
     booksBody.innerHTML = tabelData;
@@ -111,4 +111,13 @@ function sortTableByColumn(table, column, asc) {
     table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-asc', asc);
     table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-desc', !asc);
 }
-sortTableByColumn(document.querySelector('table'), 1, false);
+document.querySelectorAll('.table-sortable th').forEach(function (headerCell) {
+    headerCell.addEventListener('click', function () {
+        var _a, _b, _c;
+        // const tableElement = headerCell.closest('.table');
+        var tableElement = (_b = (_a = headerCell.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
+        var headerIndex = Array.prototype.indexOf.call((_c = headerCell.parentElement) === null || _c === void 0 ? void 0 : _c.children, headerCell);
+        var currentIsAscending = headerCell.classList.contains('th-sort-asc');
+        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+    });
+});
