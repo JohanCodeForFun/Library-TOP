@@ -1,34 +1,20 @@
-/* html {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+.table-sortable th {
+	cursor: pointer;
 }
 
-#navbar {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
+.table-sortable .th-sort-asc::after {
+	content: "\25b4";
+}
+.table-sortable .th-sort-desc::after {
+	content: "\25be";
 }
 
-#libraryContent {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+.table-sortable .th-sort-asc::after,
+.table-sortable .th-sort-desc::after {
+	margin-left: .5rem;
 }
 
-.form-input {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	gap: .5rem;
+.table-sortable .th-sort-asc,
+.table-sortable .th-sort-desc {
+	background-color: rgba(0, 0, 0, 0.2);
 }
-
-td, th {
-	text-align: left;
-	border: 1px solid #999;
-	padding: 0.5rem;
-	border-spacing: 0.5rem;
-	border-collapse: collapse;
-} */
