@@ -73,155 +73,42 @@ btns.forEach(function (button) {
     button.addEventListener("click", function (e) {
         console.log(e.target.value);
         // myLibrary.splice(e.target.value, 0);
-        var library2 = myLibrary.filter((delete => delete .value > 5));
-        ;
+        // let library2 = myLibrary.filter((delete) => delete.value > 5));
+        // loadLibrary();
     });
 });
-loadLibrary();
-;
 // const result = words.filter(word => word.length > 6);
 // const removeBook = () => {
 //   console.log(this.value);
 // };
 // removeBook();
-// sort functions
-var active = false;
-sortById === null || sortById === void 0 ? void 0 : sortById.addEventListener("click", function () {
-    active = !active;
-    if (active) {
-        sortById.classList.add("active");
-        myLibrary.sort(function (a, b) { return b.id - a.id; });
-        sortById.style.transform = "rotate(180deg)";
-        loadLibrary();
+/**
+ * Sorts the books
+ *
+ * @param {HTMLTableElement} table the table sort
+ * @param {number} column the index of the column to sort
+ * @param {boolean} asc determines if the sorting will be ascending order
+ */
+function sortTableByColumn(table, column, asc) {
+    if (asc === void 0) { asc = true; }
+    var dirModifier = asc ? 1 : -1;
+    var tBody = table.tBodies[0];
+    var rows = Array.from(tBody.querySelectorAll('tr'));
+    // Sort each row
+    var sortedRows = rows.sort(function (a, b) {
+        var aColText = a.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
+        var bColText = b.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
+        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+    });
+    // Remove all existing TRs from the table
+    while (tBody.firstChild) {
+        tBody.removeChild(tBody.firstChild);
     }
-    else {
-        sortById.classList.remove("active");
-        myLibrary.sort(function (a, b) { return a.id - b.id; });
-        sortById.style.transform = "rotate(0deg)";
-        loadLibrary();
-    }
-});
-sortByTitle === null || sortByTitle === void 0 ? void 0 : sortByTitle.addEventListener("click", function () {
-    active = !active;
-    if (active) {
-        myLibrary.sort(function (a, b) {
-            if (a.title < b.title) {
-                return -1;
-            }
-            if (a.title > b.title) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByTitle.src = "img/chevron-down-box.png";
-        sortByTitle.style.transform = "rotate(0deg)";
-        loadLibrary();
-    }
-    else {
-        myLibrary.sort(function (a, b) {
-            if (a.title > b.title) {
-                return -1;
-            }
-            if (a.title < b.title) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByTitle.src = "img/chevron-down-box.png";
-        sortByTitle.style.transform = "rotate(180deg)";
-        loadLibrary();
-    }
-});
-sortByAuthor === null || sortByAuthor === void 0 ? void 0 : sortByAuthor.addEventListener("click", function () {
-    active = !active;
-    if (active) {
-        myLibrary.sort(function (a, b) {
-            if (a.author < b.author) {
-                return -1;
-            }
-            if (a.author > b.author) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByAuthor.src = "img/chevron-down-box.png";
-        sortByAuthor.style.transform = "rotate(0deg)";
-        loadLibrary();
-    }
-    else {
-        myLibrary.sort(function (a, b) {
-            if (a.author > b.author) {
-                return -1;
-            }
-            if (a.author < b.author) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByAuthor.src = "img/chevron-down-box.png";
-        sortByAuthor.style.transform = "rotate(180deg)";
-        loadLibrary();
-    }
-});
-sortByPages === null || sortByPages === void 0 ? void 0 : sortByPages.addEventListener("click", function () {
-    active = !active;
-    if (active) {
-        myLibrary.sort(function (a, b) {
-            if (a.pages < b.pages) {
-                return -1;
-            }
-            if (a.pages > b.pages) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByPages.src = "img/chevron-down-box.png";
-        sortByPages.style.transform = "rotate(0deg)";
-        loadLibrary();
-    }
-    else {
-        myLibrary.sort(function (a, b) {
-            if (a.pages > b.pages) {
-                return -1;
-            }
-            if (a.pages < b.pages) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByPages.src = "img/chevron-down-box.png";
-        sortByPages.style.transform = "rotate(180deg)";
-        loadLibrary();
-    }
-});
-sortByRead === null || sortByRead === void 0 ? void 0 : sortByRead.addEventListener("click", function () {
-    active = !active;
-    if (active) {
-        myLibrary.sort(function (a, b) {
-            if (a.read < b.read) {
-                return -1;
-            }
-            if (a.read > b.read) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByRead.src = "img/chevron-down-box.png";
-        sortByRead.style.transform = "rotate(0deg)";
-        loadLibrary();
-    }
-    else {
-        myLibrary.sort(function (a, b) {
-            if (a.read > b.read) {
-                return -1;
-            }
-            if (a.read < b.read) {
-                return 1;
-            }
-            return 0;
-        });
-        sortByRead.src = "img/chevron-down-box.png";
-        sortByRead.style.transform = "rotate(180deg)";
-        loadLibrary();
-    }
-});
+    // Re-add the newly sorted rows
+    tBody.append.apply(tBody, sortedRows);
+    // Rememeber how the column is currently sorted
+    table.querySelectorAll('th').forEach(function (th) { return th.classList.remove('th-sort-asc', 'th-sort-desc'); });
+    table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-asc', asc);
+    table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-desc', !asc);
+}
+sortTableByColumn(document.querySelector('table'), 1, false);
