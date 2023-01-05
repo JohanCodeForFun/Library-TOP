@@ -30,7 +30,7 @@ var popoverList = __spreadArray([], popoverTriggerList, true).map(function (popo
 var loadLibrary = function () {
     var tabelData = myLibrary
         .map(function (value) {
-        return "<tr>\n\t<td> ".concat(value.title, " </td>\n\t<td> ").concat(value.author, " </td>\n\t<td> ").concat(value.pages, " </td>\n\t<td> \n\t<div class=\"form-check\">\n<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\">\n<label class=\"form-check-label\" for=\"flexCheckDefault\">\n</label>\n</div>\n\t</td>\n\t<td> <button id=\"removeBtn\" value=\"").concat(value.id, "\" class=\"btn btn-danger\">Remove</button> </td>\n</tr>");
+        return "\n\t\t\t<tr>\n\t\t\t\t<td> ".concat(value.title, " </td>\n\t\t\t\t<td> ").concat(value.author, " </td>\n\t\t\t\t<td> ").concat(value.pages, " </td>\n\t\t\t\t<td> \n\t\t\t\t<div class=\"form-check\">\n\t\t\t<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckDefault\">\n\t\t\t<label class=\"form-check-label\" for=\"flexCheckDefault\">\n\t\t\t</label>\n\t\t\t</div>\n\t\t\t</td>\n\t\t\t<td> <button id=\"removeBtn\" value=\"").concat(value.id, "\" class=\"btn btn-danger\">Remove</button> </td>\n</tr>");
     })
         .join("");
     booksBody.innerHTML = tabelData;
@@ -39,18 +39,11 @@ function Book(title, author, pages, id, read) {
     (this.title = title), (this.author = author), (this.pages = pages);
     (this.id = id), (this.read = read);
 }
-// {title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '0', read: true},
-// {title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '1', read: true},
-// {title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '2', read: true},
 var fillLibrary = function () {
     var book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
     var book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
     var book3 = new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false);
     myLibrary.push(book1, book2, book3);
-    // myLibrary.push(new Book("Zero To One", "Peter Thiel", 210, 0, true));
-    // myLibrary.push(new Book("Hackers & Painters", "Paul Graham", 258, 1, true));
-    // myLibrary.push(
-    //   new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false));
 };
 fillLibrary();
 loadLibrary();
@@ -93,12 +86,16 @@ function sortTableByColumn(table, column, asc) {
     if (asc === void 0) { asc = true; }
     var dirModifier = asc ? 1 : -1;
     var tBody = table.tBodies[0];
-    var rows = Array.from(tBody.querySelectorAll('tr'));
+    var rows = Array.from(tBody.querySelectorAll("tr"));
     // Sort each row
     var sortedRows = rows.sort(function (a, b) {
-        var aColText = a.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
-        var bColText = b.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        var aColText = a
+            .querySelector("td:nth-child(".concat(column + 1, ")"))
+            .textContent.trim();
+        var bColText = b
+            .querySelector("td:nth-child(".concat(column + 1, ")"))
+            .textContent.trim();
+        return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
     });
     // Remove all existing TRs from the table
     while (tBody.firstChild) {
@@ -107,17 +104,23 @@ function sortTableByColumn(table, column, asc) {
     // Re-add the newly sorted rows
     tBody.append.apply(tBody, sortedRows);
     // Rememeber how the column is currently sorted
-    table.querySelectorAll('th').forEach(function (th) { return th.classList.remove('th-sort-asc', 'th-sort-desc'); });
-    table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-asc', asc);
-    table.querySelector("th:nth-child(".concat(column + 1, ")")).classList.toggle('th-sort-desc', !asc);
+    table
+        .querySelectorAll("th")
+        .forEach(function (th) { return th.classList.remove("th-sort-asc", "th-sort-desc"); });
+    table
+        .querySelector("th:nth-child(".concat(column + 1, ")"))
+        .classList.toggle("th-sort-asc", asc);
+    table
+        .querySelector("th:nth-child(".concat(column + 1, ")"))
+        .classList.toggle("th-sort-desc", !asc);
 }
-document.querySelectorAll('.table-sortable th').forEach(function (headerCell) {
-    headerCell.addEventListener('click', function () {
+document.querySelectorAll(".table-sortable th").forEach(function (headerCell) {
+    headerCell.addEventListener("click", function () {
         var _a, _b, _c;
         // const tableElement = headerCell.closest('.table');
         var tableElement = (_b = (_a = headerCell.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.parentElement;
         var headerIndex = Array.prototype.indexOf.call((_c = headerCell.parentElement) === null || _c === void 0 ? void 0 : _c.children, headerCell);
-        var currentIsAscending = headerCell.classList.contains('th-sort-asc');
+        var currentIsAscending = headerCell.classList.contains("th-sort-asc");
         sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
     });
 });

@@ -46,25 +46,25 @@ const popoverList = [...popoverTriggerList].map(
 const loadLibrary = () => {
   const tabelData = myLibrary
     .map((value) => {
-      return `<tr>
-	<td> ${value.title} </td>
-	<td> ${value.author} </td>
-	<td> ${value.pages} </td>
-	<td> 
-	<div class="form-check">
-<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-<label class="form-check-label" for="flexCheckDefault">
-</label>
-</div>
-	</td>
-	<td> <button id="removeBtn" value="${value.id}" class="btn btn-danger">Remove</button> </td>
+      return `
+			<tr>
+				<td> ${value.title} </td>
+				<td> ${value.author} </td>
+				<td> ${value.pages} </td>
+				<td> 
+				<div class="form-check">
+			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+			<label class="form-check-label" for="flexCheckDefault">
+			</label>
+			</div>
+			</td>
+			<td> <button id="removeBtn" value="${value.id}" class="btn btn-danger">Remove</button> </td>
 </tr>`;
     })
     .join("");
 
   booksBody.innerHTML = tabelData;
 };
-
 
 function Book(
   this: any,
@@ -78,21 +78,19 @@ function Book(
   (this.id = id), (this.read = read);
 }
 
-// {title: 'Zero To One', author: 'Peter Thiel', pages: '210', id: '0', read: true},
-// {title: 'Hackers & Painters', author: 'Paul Graham', pages: '258', id: '1', read: true},
-// {title: 'Computer Science Distilled', author: 'Wladston Ferreira Filho', pages: '168', id: '2', read: true},
-
 const fillLibrary = () => {
-	const book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
-	const book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
-	const book3 = new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false);
-	myLibrary.push(book1, book2, book3)
-
-  // myLibrary.push(new Book("Zero To One", "Peter Thiel", 210, 0, true));
-  // myLibrary.push(new Book("Hackers & Painters", "Paul Graham", 258, 1, true));
-  // myLibrary.push(
-  //   new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false));
+  const book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
+  const book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
+  const book3 = new Book(
+    "Computer Science Distilled",
+    "Wladston Ferreira Filho",
+    168,
+    2,
+    false
+  );
+  myLibrary.push(book1, book2, book3);
 };
+
 fillLibrary();
 loadLibrary();
 
@@ -121,237 +119,80 @@ findLastID();
 // function to listen for input and update live in console.
 submitButton?.addEventListener("click", addBookToLibrary);
 
-
-
-
-
 // remove book function
 let btns = document.querySelectorAll("#removeBtn");
 
-
-
 btns.forEach((button) => {
   button.addEventListener("click", (e) => {
-		console.log(e.target.value)
-		// myLibrary.splice(e.target.value, 0);
-		// let library2 = myLibrary.filter((delete) => delete.value > 5));
-		// loadLibrary();
-	})
+    console.log(e.target.value);
+    // myLibrary.splice(e.target.value, 0);
+    // let library2 = myLibrary.filter((delete) => delete.value > 5));
+    // loadLibrary();
+  });
 });
 
-
 // const result = words.filter(word => word.length > 6);
-
-
-
-
-
 
 // const removeBook = () => {
 //   console.log(this.value);
 // };
 // removeBook();
 
-
-/** 
+/**
  * Sorts the books
- * 
+ *
  * @param {HTMLTableElement} table the table sort
  * @param {number} column the index of the column to sort
  * @param {boolean} asc determines if the sorting will be ascending order
  */
 
 function sortTableByColumn(table, column, asc = true) {
-	const dirModifier = asc ? 1 : -1;
-	const tBody = table.tBodies[0];
-	const rows = Array.from(tBody.querySelectorAll('tr'));
+  const dirModifier = asc ? 1 : -1;
+  const tBody = table.tBodies[0];
+  const rows = Array.from(tBody.querySelectorAll("tr"));
 
-	// Sort each row
-	const sortedRows = rows.sort((a, b) => {
-		const aColText = a.querySelector(`td:nth-child(${ column + 1})`).textContent.trim();
-		const bColText = b.querySelector(`td:nth-child(${ column + 1})`).textContent.trim();
+  // Sort each row
+  const sortedRows = rows.sort((a, b) => {
+    const aColText = a
+      .querySelector(`td:nth-child(${column + 1})`)
+      .textContent.trim();
+    const bColText = b
+      .querySelector(`td:nth-child(${column + 1})`)
+      .textContent.trim();
 
-		return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-	});
+    return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
+  });
 
-	// Remove all existing TRs from the table
-	while (tBody.firstChild) {
-		tBody.removeChild(tBody.firstChild)
-	}
+  // Remove all existing TRs from the table
+  while (tBody.firstChild) {
+    tBody.removeChild(tBody.firstChild);
+  }
 
-	// Re-add the newly sorted rows
-	tBody.append(...sortedRows);
+  // Re-add the newly sorted rows
+  tBody.append(...sortedRows);
 
-	// Rememeber how the column is currently sorted
-	table.querySelectorAll('th').forEach(th => th.classList.remove('th-sort-asc', 'th-sort-desc'));
-	table.querySelector(`th:nth-child(${ column + 1 })`).classList.toggle('th-sort-asc', asc);
-	table.querySelector(`th:nth-child(${ column + 1 })`).classList.toggle('th-sort-desc', !asc);
+  // Rememeber how the column is currently sorted
+  table
+    .querySelectorAll("th")
+    .forEach((th) => th.classList.remove("th-sort-asc", "th-sort-desc"));
+  table
+    .querySelector(`th:nth-child(${column + 1})`)
+    .classList.toggle("th-sort-asc", asc);
+  table
+    .querySelector(`th:nth-child(${column + 1})`)
+    .classList.toggle("th-sort-desc", !asc);
 }
 
-document.querySelectorAll('.table-sortable th').forEach(headerCell => {
-	headerCell.addEventListener('click', () => {
-		// const tableElement = headerCell.closest('.table');
-		const tableElement = headerCell.parentElement?.parentElement?.parentElement;
-		const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement?.children, headerCell);
-		const currentIsAscending = headerCell.classList.contains('th-sort-asc');
+document.querySelectorAll(".table-sortable th").forEach((headerCell) => {
+  headerCell.addEventListener("click", () => {
+    // const tableElement = headerCell.closest('.table');
+    const tableElement = headerCell.parentElement?.parentElement?.parentElement;
+    const headerIndex = Array.prototype.indexOf.call(
+      headerCell.parentElement?.children,
+      headerCell
+    );
+    const currentIsAscending = headerCell.classList.contains("th-sort-asc");
 
-		sortTableByColumn(tableElement, headerIndex, !currentIsAscending)
-	})
-})
-
-// // sort functions
-// let active = false;
-
-// sortById?.addEventListener("click", () => {
-//   active = !active;
-
-//   if (active) {
-//     sortById.classList.add("active");
-//     myLibrary.sort((a, b) => b.id - a.id);
-//     sortById.style.transform = "rotate(180deg)";
-//     loadLibrary();
-//   } else {
-//     sortById.classList.remove("active");
-//     myLibrary.sort((a, b) => a.id - b.id);
-//     sortById.style.transform = "rotate(0deg)";
-//     loadLibrary();
-//   }
-// });
-
-// sortByTitle?.addEventListener("click", () => {
-//   active = !active;
-
-//   if (active) {
-//     myLibrary.sort((a, b) => {
-//       if (a.title < b.title) {
-//         return -1;
-//       }
-//       if (a.title > b.title) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByTitle.src = "img/chevron-down-box.png";
-//     sortByTitle.style.transform = "rotate(0deg)";
-//     loadLibrary();
-//   } else {
-//     myLibrary.sort((a, b) => {
-//       if (a.title > b.title) {
-//         return -1;
-//       }
-//       if (a.title < b.title) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByTitle.src = "img/chevron-down-box.png";
-//     sortByTitle.style.transform = "rotate(180deg)";
-//     loadLibrary();
-//   }
-// });
-
-// sortByAuthor?.addEventListener("click", () => {
-//   active = !active;
-
-//   if (active) {
-//     myLibrary.sort((a, b) => {
-//       if (a.author < b.author) {
-//         return -1;
-//       }
-//       if (a.author > b.author) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByAuthor.src = "img/chevron-down-box.png";
-//     sortByAuthor.style.transform = "rotate(0deg)";
-//     loadLibrary();
-//   } else {
-//     myLibrary.sort((a, b) => {
-//       if (a.author > b.author) {
-//         return -1;
-//       }
-//       if (a.author < b.author) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByAuthor.src = "img/chevron-down-box.png";
-//     sortByAuthor.style.transform = "rotate(180deg)";
-//     loadLibrary();
-//   }
-// });
-
-// sortByPages?.addEventListener("click", () => {
-//   active = !active;
-
-//   if (active) {
-//     myLibrary.sort((a, b) => {
-//       if (a.pages < b.pages) {
-//         return -1;
-//       }
-//       if (a.pages > b.pages) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByPages.src = "img/chevron-down-box.png";
-//     sortByPages.style.transform = "rotate(0deg)";
-//     loadLibrary();
-//   } else {
-//     myLibrary.sort((a, b) => {
-//       if (a.pages > b.pages) {
-//         return -1;
-//       }
-//       if (a.pages < b.pages) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByPages.src = "img/chevron-down-box.png";
-//     sortByPages.style.transform = "rotate(180deg)";
-//     loadLibrary();
-//   }
-// });
-
-// sortByRead?.addEventListener("click", () => {
-//   active = !active;
-
-//   if (active) {
-//     myLibrary.sort((a, b) => {
-//       if (a.read < b.read) {
-//         return -1;
-//       }
-//       if (a.read > b.read) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByRead.src = "img/chevron-down-box.png";
-//     sortByRead.style.transform = "rotate(0deg)";
-//     loadLibrary();
-//   } else {
-//     myLibrary.sort((a, b) => {
-//       if (a.read > b.read) {
-//         return -1;
-//       }
-//       if (a.read < b.read) {
-//         return 1;
-//       }
-//       return 0;
-//     });
-
-//     sortByRead.src = "img/chevron-down-box.png";
-//     sortByRead.style.transform = "rotate(180deg)";
-//     loadLibrary();
-//   }
-// });
-
-// removeBtn.addEventListener('click', () => console.log('click removeBtn'))
+    sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+  });
+});
