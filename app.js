@@ -63,11 +63,11 @@ submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEven
 // remove book function
 var btns = document.querySelectorAll("#removeBtn");
 btns.forEach(function (button) {
-    button.addEventListener("click", function (e) {
-        console.log(e.target.value);
-        // myLibrary.splice(e.target.value, 0);
-        // let library2 = myLibrary.filter((delete) => delete.value > 5));
-        // loadLibrary();
+    button.addEventListener("click", function (event) {
+        console.log(event.target.value);
+        myLibrary.splice(event.target.value, 1);
+        // varför slutar btn click att fungera efter att jag använder loadLibrary()?
+        loadLibrary();
     });
 });
 // const result = words.filter(word => word.length > 6);

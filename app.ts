@@ -1,6 +1,6 @@
 "use strict";
 
-let myLibrary: Book[] = [];
+let myLibrary: [] = [];
 declare let bootstrap: any;
 
 const inputTitle = <HTMLInputElement>document.querySelector("#inputTitle");
@@ -123,11 +123,12 @@ submitButton?.addEventListener("click", addBookToLibrary);
 let btns = document.querySelectorAll("#removeBtn");
 
 btns.forEach((button) => {
-  button.addEventListener("click", (e) => {
-    console.log(e.target.value);
-    // myLibrary.splice(e.target.value, 0);
-    // let library2 = myLibrary.filter((delete) => delete.value > 5));
-    // loadLibrary();
+  button.addEventListener("click", (event) => {
+    console.log(event.target.value);
+    myLibrary.splice(event.target.value, 1);
+
+		// varför slutar btn click att fungera efter att jag använder loadLibrary()?
+    loadLibrary();
   });
 });
 
