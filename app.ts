@@ -1,39 +1,22 @@
 "use strict";
 
-let myLibrary: [] = [];
+let myLibrary: Book[] = [];
+
 declare let bootstrap: any;
 
-const inputTitle = <HTMLInputElement>document.querySelector("#inputTitle");
-const inputAuthor = <HTMLInputElement>document.querySelector("#inputAuthor");
-const inputPages = <HTMLInputElement>document.querySelector("#inputPages");
-const bookParagraph = <HTMLInputElement>(
-  document.querySelector("#bookParagraph")
-);
-const submitButton = <HTMLInputElement>document.querySelector("#submitBook");
+const inputTitle = document.querySelector("#inputTitle") as HTMLInputElement;
+const inputAuthor = document.querySelector("#inputAuthor") as HTMLInputElement;
+const inputPages = document.querySelector("#inputPages") as HTMLInputElement;
+const bookParagraph = document.querySelector("#bookParagraph");
+const submitButton = document.querySelector("#submitBook");
 
-const sortById = document.querySelector<HTMLElement>(
-  "#sort-by-id"
-) as HTMLImageElement;
-const sortByTitle = document.querySelector<HTMLElement>(
-  "#sort-by-title"
-) as HTMLImageElement;
-const sortByAuthor = document.querySelector<HTMLElement>(
-  "#sort-by-author"
-) as HTMLImageElement;
-const sortByPages = document.querySelector<HTMLElement>(
-  "#sort-by-pages"
-) as HTMLImageElement;
-const sortByRead = document.querySelector<HTMLElement>(
-  "#sort-by-read"
-) as HTMLImageElement;
+const sortById = document.querySelector("#sort-by-id") as HTMLImageElement;
+const sortByTitle = document.querySelector("#sort-by-title") as HTMLImageElement;
+const sortByAuthor = document.querySelector("#sort-by-author") as HTMLImageElement;
+const sortByPages = document.querySelector("#sort-by-pages") as HTMLImageElement;
+const sortByRead = document.querySelector("#sort-by-read") as HTMLImageElement;
 
-// const image = document.getElementById('photo') as HTMLImageElement | null;
-
-// if (image !== null) {
-//   image.src = 'photo.jpg';
-// }
-
-const booksBody = document.querySelector("#booksBody");
+const booksBody = document.querySelector("#booksBody")!;
 
 // initialize popovers for modal, succesfully add book to list
 const popoverTriggerList = document.querySelectorAll(
@@ -66,16 +49,14 @@ const loadLibrary = () => {
   booksBody.innerHTML = tabelData;
 };
 
-function Book(
-  this: any,
-  title: string,
-  author: string,
-  pages: number,
-  id: number,
-  read: boolean
-) {
-  (this.title = title), (this.author = author), (this.pages = pages);
-  (this.id = id), (this.read = read);
+class Book {
+  constructor(
+    public title: string,
+    public author: string,
+    public pages: number,
+    public id: number,
+    public read: boolean
+  ) {}
 }
 
 const fillLibrary = () => {
@@ -123,21 +104,16 @@ submitButton?.addEventListener("click", addBookToLibrary);
 let btns = document.querySelectorAll("#removeBtn");
 
 btns.forEach((button) => {
-  button.addEventListener("click", (event) => {
-    console.log(event.target.value);
-    myLibrary.splice(event.target.value, 1);
+  button.addEventListener("click", (event: Event) => {
+    const target = event.target as HTMLButtonElement;
+    if (target) console.log(target.value);
 
-		// varför slutar btn click att fungera efter att jag använder loadLibrary()?
+    // myLibrary.splice(target.value, 1);
+
+    // varför slutar btn click att fungera efter att jag använder loadLibrary()?
     loadLibrary();
   });
 });
-
-// const result = words.filter(word => word.length > 6);
-
-// const removeBook = () => {
-//   console.log(this.value);
-// };
-// removeBook();
 
 /**
  * Sorts the books
@@ -147,19 +123,19 @@ btns.forEach((button) => {
  * @param {boolean} asc determines if the sorting will be ascending order
  */
 
-function sortTableByColumn(table, column, asc = true) {
+function sortTableByColumn(
+  table: HTMLTableElement,
+  column: number,
+  asc = true
+) {
   const dirModifier = asc ? 1 : -1;
   const tBody = table.tBodies[0];
   const rows = Array.from(tBody.querySelectorAll("tr"));
 
   // Sort each row
   const sortedRows = rows.sort((a, b) => {
-    const aColText = a
-      .querySelector(`td:nth-child(${column + 1})`)
-      .textContent.trim();
-    const bColText = b
-      .querySelector(`td:nth-child(${column + 1})`)
-      .textContent.trim();
+    const aColText = a.querySelector(`td:nth-child(${column + 1})`)!.textContent!.trim();
+    const bColText = b.querySelector(`td:nth-child(${column + 1})`)!.textContent!.trim();
 
     return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
   });
@@ -173,21 +149,19 @@ function sortTableByColumn(table, column, asc = true) {
   tBody.append(...sortedRows);
 
   // Rememeber how the column is currently sorted
-  table
-    .querySelectorAll("th")
+  table.querySelectorAll("th")
     .forEach((th) => th.classList.remove("th-sort-asc", "th-sort-desc"));
-  table
-    .querySelector(`th:nth-child(${column + 1})`)
+  table.querySelector(`th:nth-child(${column + 1})`)!
     .classList.toggle("th-sort-asc", asc);
-  table
-    .querySelector(`th:nth-child(${column + 1})`)
+  table.querySelector(`th:nth-child(${column + 1})`)!
     .classList.toggle("th-sort-desc", !asc);
 }
 
 document.querySelectorAll(".table-sortable th").forEach((headerCell) => {
   headerCell.addEventListener("click", () => {
     // const tableElement = headerCell.closest('.table');
-    const tableElement = headerCell.parentElement?.parentElement?.parentElement;
+    const tableElement = headerCell.parentElement?.parentElement
+      ?.parentElement as HTMLTableElement;
     const headerIndex = Array.prototype.indexOf.call(
       headerCell.parentElement?.children,
       headerCell

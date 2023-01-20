@@ -12,17 +12,13 @@ var myLibrary = [];
 var inputTitle = document.querySelector("#inputTitle");
 var inputAuthor = document.querySelector("#inputAuthor");
 var inputPages = document.querySelector("#inputPages");
-var bookParagraph = (document.querySelector("#bookParagraph"));
+var bookParagraph = document.querySelector("#bookParagraph");
 var submitButton = document.querySelector("#submitBook");
 var sortById = document.querySelector("#sort-by-id");
 var sortByTitle = document.querySelector("#sort-by-title");
 var sortByAuthor = document.querySelector("#sort-by-author");
 var sortByPages = document.querySelector("#sort-by-pages");
 var sortByRead = document.querySelector("#sort-by-read");
-// const image = document.getElementById('photo') as HTMLImageElement | null;
-// if (image !== null) {
-//   image.src = 'photo.jpg';
-// }
 var booksBody = document.querySelector("#booksBody");
 // initialize popovers for modal, succesfully add book to list
 var popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
@@ -35,10 +31,16 @@ var loadLibrary = function () {
         .join("");
     booksBody.innerHTML = tabelData;
 };
-function Book(title, author, pages, id, read) {
-    (this.title = title), (this.author = author), (this.pages = pages);
-    (this.id = id), (this.read = read);
-}
+var Book = /** @class */ (function () {
+    function Book(title, author, pages, id, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.id = id;
+        this.read = read;
+    }
+    return Book;
+}());
 var fillLibrary = function () {
     var book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
     var book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
@@ -64,17 +66,14 @@ submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEven
 var btns = document.querySelectorAll("#removeBtn");
 btns.forEach(function (button) {
     button.addEventListener("click", function (event) {
-        console.log(event.target.value);
-        myLibrary.splice(event.target.value, 1);
+        var target = event.target;
+        if (target)
+            console.log(target.value);
+        // myLibrary.splice(target.value, 1);
         // varför slutar btn click att fungera efter att jag använder loadLibrary()?
         loadLibrary();
     });
 });
-// const result = words.filter(word => word.length > 6);
-// const removeBook = () => {
-//   console.log(this.value);
-// };
-// removeBook();
 /**
  * Sorts the books
  *
@@ -89,12 +88,8 @@ function sortTableByColumn(table, column, asc) {
     var rows = Array.from(tBody.querySelectorAll("tr"));
     // Sort each row
     var sortedRows = rows.sort(function (a, b) {
-        var aColText = a
-            .querySelector("td:nth-child(".concat(column + 1, ")"))
-            .textContent.trim();
-        var bColText = b
-            .querySelector("td:nth-child(".concat(column + 1, ")"))
-            .textContent.trim();
+        var aColText = a.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
+        var bColText = b.querySelector("td:nth-child(".concat(column + 1, ")")).textContent.trim();
         return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
     });
     // Remove all existing TRs from the table
@@ -104,14 +99,11 @@ function sortTableByColumn(table, column, asc) {
     // Re-add the newly sorted rows
     tBody.append.apply(tBody, sortedRows);
     // Rememeber how the column is currently sorted
-    table
-        .querySelectorAll("th")
+    table.querySelectorAll("th")
         .forEach(function (th) { return th.classList.remove("th-sort-asc", "th-sort-desc"); });
-    table
-        .querySelector("th:nth-child(".concat(column + 1, ")"))
+    table.querySelector("th:nth-child(".concat(column + 1, ")"))
         .classList.toggle("th-sort-asc", asc);
-    table
-        .querySelector("th:nth-child(".concat(column + 1, ")"))
+    table.querySelector("th:nth-child(".concat(column + 1, ")"))
         .classList.toggle("th-sort-desc", !asc);
 }
 document.querySelectorAll(".table-sortable th").forEach(function (headerCell) {
