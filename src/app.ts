@@ -41,49 +41,6 @@ class FindLastID {
   }
 }
 
-const loadLibrary = () => {
-  const tabelData = myLibrary.getBooks()
-    .map((value) => {
-      return `
-			<tr>
-				<td> ${value.title} </td>
-				<td> ${value.author} </td>
-				<td> ${value.pages} </td>
-				<td> 
-				<div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault-${value.id}">
-          <label class="form-check-label" for="flexCheckDefault-${value.id}">
-          </label>
-        </div>
-        </td>
-        <td> <button value="${value.id}" class="btn btn-danger">Remove</button> </td>
-      </tr>`;
-    })
-    .join("");
-
-  booksBody.innerHTML = tabelData;
-
-  // remove book function
-  const btns = document.querySelectorAll("button.btn-danger");
-
-  btns.forEach((button) => {
-    button.addEventListener("click", (event: Event) => {
-      const target = event.target as HTMLButtonElement;
-      if (target) {
-        const bookId = parseInt(target.value);
-
-        myLibrary.removeBook(bookId);
-
-        // const btns = document.querySelectorAll("button.btn-danger");
-        // btns.forEach((btn, index) => {
-        //   (btn as HTMLButtonElement).value = index.toString();
-        // })
-      };
-      // loadLibrary();
-    });
-  });
-};
-
 submitButton?.addEventListener("click", (event: Event) => {
   const title = (document.querySelector("#inputTitle") as HTMLInputElement).value;
   const author = (document.querySelector("#inputAuthor") as HTMLInputElement).value;
@@ -111,7 +68,7 @@ class Library {
     const newBook = new Book(title, author, pages, newId, isRead);
     this.books.push(newBook);
 
-    loadLibrary();
+    this.loadLibrary();
   }
 
   fillLibrary(): void {
@@ -121,6 +78,43 @@ class Library {
     this.books.push(book1, book2, book3);
   };
 
+  loadLibrary() {
+    const tabelData = this.getBooks()
+      .map((value) => {
+        return `
+        <tr>
+          <td> ${value.title} </td>
+          <td> ${value.author} </td>
+          <td> ${value.pages} </td>
+          <td> 
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault-${value.id}">
+            <label class="form-check-label" for="flexCheckDefault-${value.id}">
+            </label>
+          </div>
+          </td>
+          <td> <button value="${value.id}" class="btn btn-danger">Remove</button> </td>
+        </tr>`;
+      })
+      .join("");
+  
+    booksBody.innerHTML = tabelData;
+  
+    // remove book function
+    const btns = document.querySelectorAll("button.btn-danger");
+  
+    btns.forEach((button) => {
+      button.addEventListener("click", (event: Event) => {
+        const target = event.target as HTMLButtonElement;
+        if (target) {
+          const bookId = parseInt(target.value);
+  
+          myLibrary.removeBook(bookId);
+        };
+      });
+    });
+  };
+
   getBooks(): Book[] {
     return this.books;
   }
@@ -128,7 +122,7 @@ class Library {
   removeBook(bookId: number): Book[] {
     this.books = this.books.filter(book => book.id !== bookId);
 
-    loadLibrary()
+    this.loadLibrary()
 
     return this.books;
   }
@@ -137,7 +131,7 @@ class Library {
 const myLibrary = new Library();
 myLibrary.fillLibrary();
 
-loadLibrary();
+myLibrary.loadLibrary();
 
 /**
  * Sorts the books
