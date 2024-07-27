@@ -26,8 +26,7 @@ const popoverList = [...popoverTriggerList].map(
 );
 
 const addBookToLibrary = () => {
-  // use findLastId() to find id from myLibrary array
-  let lastId = findLastID() + 1;
+  let lastId = FindLastID.getLastId() + 1;
 
   myLibrary.push(
     new Book(
@@ -38,15 +37,28 @@ const addBookToLibrary = () => {
       true
     )
   );
-  console.log(lastId, myLibrary)
   loadLibrary();
 };
 
-const findLastID = () => {
-  let lastId = myLibrary.length - 1;
-  return lastId;
-};
-findLastID();
+class FindLastID {
+  lastId: string;
+
+  constructor(lastId: string) {
+    this.lastId = lastId;
+  }
+
+  static getLastId(): number {
+    if (!Array.isArray(myLibrary) || myLibrary.length === 0) {
+      let lastId = 1;
+
+      return lastId;
+    }
+    
+    let lastId = myLibrary.length - 1;
+
+    return lastId;
+  }
+}
 
 const loadLibrary = () => {
   const tabelData = myLibrary
