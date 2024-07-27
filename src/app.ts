@@ -1,11 +1,7 @@
 "use strict";
-let myLibrary: Book[] = [];
 
 declare let bootstrap: any;
 
-const inputTitle = document.querySelector("#inputTitle") as HTMLInputElement;
-const inputAuthor = document.querySelector("#inputAuthor") as HTMLInputElement;
-const inputPages = document.querySelector("#inputPages") as HTMLInputElement;
 const bookParagraph = document.querySelector("#bookParagraph");
 const submitButton = document.querySelector("#submitBook");
 
@@ -25,21 +21,6 @@ const popoverList = [...popoverTriggerList].map(
   (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
 );
 
-const addBookToLibrary = () => {
-  let lastId = FindLastID.getLastId() + 1;
-
-  myLibrary.push(
-    new Book(
-      `${inputTitle.value}`,
-      `${inputAuthor.value}`,
-      Number(`${inputPages.value}`),
-      Number(`${lastId}`),
-      true
-    )
-  );
-  loadLibrary();
-};
-
 class FindLastID {
   lastId: string;
 
@@ -53,7 +34,7 @@ class FindLastID {
 
       return lastId;
     }
-    
+
     let lastId = myLibrary.length - 1;
 
     return lastId;
@@ -61,7 +42,7 @@ class FindLastID {
 }
 
 const loadLibrary = () => {
-  const tabelData = myLibrary
+  const tabelData = myLibrary.getBooks()
     .map((value) => {
       return `
 			<tr>
@@ -70,8 +51,8 @@ const loadLibrary = () => {
 				<td> ${value.pages} </td>
 				<td> 
 				<div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault-${value.id}">
+          <label class="form-check-label" for="flexCheckDefault-${value.id}">
           </label>
         </div>
         </td>
@@ -82,9 +63,6 @@ const loadLibrary = () => {
 
   booksBody.innerHTML = tabelData;
 
-  // function to listen for input and update live in console.
-  submitButton?.addEventListener("click", addBookToLibrary);
-
   // remove book function
   const btns = document.querySelectorAll("button.btn-danger");
 
@@ -92,18 +70,28 @@ const loadLibrary = () => {
     button.addEventListener("click", (event: Event) => {
       const target = event.target as HTMLButtonElement;
       if (target) {
-        myLibrary = myLibrary.filter(book => book.id !== Number(target.value))
+        const bookId = parseInt(target.value);
 
-        const btns = document.querySelectorAll("button.btn-danger");
-        btns.forEach((btn, index) => {
-          (btn as HTMLButtonElement).value = index.toString();
-        })
-      }
+        myLibrary.removeBook(bookId);
 
-      loadLibrary();
+        // const btns = document.querySelectorAll("button.btn-danger");
+        // btns.forEach((btn, index) => {
+        //   (btn as HTMLButtonElement).value = index.toString();
+        // })
+      };
+      // loadLibrary();
     });
   });
 };
+
+submitButton?.addEventListener("click", (event: Event) => {
+  const title = (document.querySelector("#inputTitle") as HTMLInputElement).value;
+  const author = (document.querySelector("#inputAuthor") as HTMLInputElement).value;
+  const pages = parseInt((document.querySelector("#inputPages") as HTMLInputElement).value, 10);
+  const isRead = (document.querySelector("#inputIsRead") as HTMLInputElement).checked;
+
+  myLibrary.addBook(title, author, pages, isRead);
+})
 
 class Book {
   constructor(
@@ -115,20 +103,40 @@ class Book {
   ) { }
 }
 
-const fillLibrary = () => {
-  const book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
-  const book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
-  const book3 = new Book(
-    "Computer Science Distilled",
-    "Wladston Ferreira Filho",
-    168,
-    2,
-    false
-  );
-  myLibrary.push(book1, book2, book3);
-};
+class Library {
+  private books: Book[] = [];
 
-fillLibrary();
+  addBook(title: string, author: string, pages: number, isRead: boolean): void {
+    const newId = this.books.length === 0 ? 1 : Math.max(...this.books.map(book => book.id)) + 1;
+    const newBook = new Book(title, author, pages, newId, isRead);
+    this.books.push(newBook);
+
+    loadLibrary();
+  }
+
+  fillLibrary(): void {
+    const book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
+    const book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
+    const book3 = new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false);
+    this.books.push(book1, book2, book3);
+  };
+
+  getBooks(): Book[] {
+    return this.books;
+  }
+
+  removeBook(bookId: number): Book[] {
+    this.books = this.books.filter(book => book.id !== bookId);
+
+    loadLibrary()
+
+    return this.books;
+  }
+}
+
+const myLibrary = new Library();
+myLibrary.fillLibrary();
+
 loadLibrary();
 
 /**
