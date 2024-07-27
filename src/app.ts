@@ -1,9 +1,13 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded", () => {
+  const formHandler = FormHandler.create();
+  formHandler.initializeEventListeners();
+})
+
 declare let bootstrap: any;
 
 const bookParagraph = document.querySelector("#bookParagraph");
-const submitButton = document.querySelector("#submitBook");
 
 const sortById = document.querySelector("#sort-by-id") as HTMLImageElement;
 const sortByTitle = document.querySelector("#sort-by-title") as HTMLImageElement;
@@ -41,14 +45,39 @@ class FindLastID {
   }
 }
 
-submitButton?.addEventListener("click", (event: Event) => {
-  const title = (document.querySelector("#inputTitle") as HTMLInputElement).value;
-  const author = (document.querySelector("#inputAuthor") as HTMLInputElement).value;
-  const pages = parseInt((document.querySelector("#inputPages") as HTMLInputElement).value, 10);
-  const isRead = (document.querySelector("#inputIsRead") as HTMLInputElement).checked;
+const FormHandler = (() => {
+  function create() {
+    const submitButton = document.querySelector("#submitBook") as HTMLButtonElement;
 
-  myLibrary.addBook(title, author, pages, isRead);
-})
+    function getFormValues() {
+      const title = (document.querySelector("#inputTitle") as HTMLInputElement).value;
+      const author = (document.querySelector("#inputAuthor") as HTMLInputElement).value;
+      const pages = parseInt((document.querySelector("#inputPages") as HTMLInputElement).value, 10);
+      const isRead = (document.querySelector("#inputIsRead") as HTMLInputElement).checked;
+      
+      return { title, author, pages, isRead }
+    }
+
+    function handleFormSubmission(event: Event) {
+      event.preventDefault();
+      const { title, author, pages, isRead } = getFormValues();
+
+      myLibrary.addBook(title, author, pages, isRead);
+    }
+
+    function initializeEventListeners() {
+      submitButton?.addEventListener("click", handleFormSubmission);
+    }
+
+    return {
+      initializeEventListeners
+    }
+  }
+
+  return {
+    create,
+  };
+})();
 
 class Book {
   constructor(
