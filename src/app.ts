@@ -1,5 +1,4 @@
 "use strict";
-
 let myLibrary: Book[] = [];
 
 declare let bootstrap: any;
@@ -26,6 +25,29 @@ const popoverList = [...popoverTriggerList].map(
   (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
 );
 
+const addBookToLibrary = () => {
+  // use findLastId() to find id from myLibrary array
+  let lastId = findLastID() + 1;
+
+  myLibrary.push(
+    new Book(
+      `${inputTitle.value}`,
+      `${inputAuthor.value}`,
+      Number(`${inputPages.value}`),
+      Number(`${lastId}`),
+      true
+    )
+  );
+  console.log(lastId, myLibrary)
+  loadLibrary();
+};
+
+const findLastID = () => {
+  let lastId = myLibrary.length - 1;
+  return lastId;
+};
+findLastID();
+
 const loadLibrary = () => {
   const tabelData = myLibrary
     .map((value) => {
@@ -36,17 +58,39 @@ const loadLibrary = () => {
 				<td> ${value.pages} </td>
 				<td> 
 				<div class="form-check">
-			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-			<label class="form-check-label" for="flexCheckDefault">
-			</label>
-			</div>
-			</td>
-			<td> <button id="removeBtn" value="${value.id}" class="btn btn-danger">Remove</button> </td>
-</tr>`;
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+          </label>
+        </div>
+        </td>
+        <td> <button value="${value.id}" class="btn btn-danger">Remove</button> </td>
+      </tr>`;
     })
     .join("");
 
   booksBody.innerHTML = tabelData;
+
+  // function to listen for input and update live in console.
+  submitButton?.addEventListener("click", addBookToLibrary);
+
+  // remove book function
+  const btns = document.querySelectorAll("button.btn-danger");
+
+  btns.forEach((button) => {
+    button.addEventListener("click", (event: Event) => {
+      const target = event.target as HTMLButtonElement;
+      if (target) {
+        myLibrary = myLibrary.filter(book => book.id !== Number(target.value))
+
+        const btns = document.querySelectorAll("button.btn-danger");
+        btns.forEach((btn, index) => {
+          (btn as HTMLButtonElement).value = index.toString();
+        })
+      }
+
+      loadLibrary();
+    });
+  });
 };
 
 class Book {
@@ -56,7 +100,7 @@ class Book {
     public pages: number,
     public id: number,
     public read: boolean
-  ) {}
+  ) { }
 }
 
 const fillLibrary = () => {
@@ -74,46 +118,6 @@ const fillLibrary = () => {
 
 fillLibrary();
 loadLibrary();
-
-const addBookToLibrary = () => {
-  // use findLastId() to find id from myLibrary array
-  let lastId = findLastID() + 1;
-
-  myLibrary.push(
-    new Book(
-      `${inputTitle.value}`,
-      `${inputAuthor.value}`,
-      Number(`${inputPages.value}`),
-      Number(`${lastId}`),
-      true
-    )
-  );
-  loadLibrary();
-};
-
-const findLastID = () => {
-  let lastId = myLibrary.length - 1;
-  return lastId;
-};
-findLastID();
-
-// function to listen for input and update live in console.
-submitButton?.addEventListener("click", addBookToLibrary);
-
-// remove book function
-let btns = document.querySelectorAll("#removeBtn");
-
-btns.forEach((button) => {
-  button.addEventListener("click", (event: Event) => {
-    const target = event.target as HTMLButtonElement;
-    if (target) console.log(target.value);
-
-    // myLibrary.splice(target.value, 1);
-
-    // varför slutar btn click att fungera efter att jag använder loadLibrary()?
-    loadLibrary();
-  });
-});
 
 /**
  * Sorts the books
