@@ -54,7 +54,7 @@ const FormHandler = (() => {
       const author = (document.querySelector("#inputAuthor") as HTMLInputElement).value;
       const pages = parseInt((document.querySelector("#inputPages") as HTMLInputElement).value, 10);
       const isRead = (document.querySelector("#inputIsRead") as HTMLInputElement).checked;
-      
+
       return { title, author, pages, isRead }
     }
 
@@ -80,31 +80,77 @@ const FormHandler = (() => {
 })();
 
 class Book {
-  constructor(
-    public title: string,
-    public author: string,
-    public pages: number,
-    public id: number,
-    public read: boolean
-  ) { }
+  #id: number;
+  #title: string;
+  #author: string;
+  #pages: number;
+  #isRead: boolean;
+
+  constructor(id: number, title: string, author: string, pages: number, isRead: boolean) {
+    this.#id = id;
+    this.#title = title;
+    this.#author = author;
+    this.#pages = pages;
+    this.#isRead = isRead;
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get title() {
+    return this.#title;
+  }
+
+  set title(newTitle: string) {
+    this.#title = newTitle;
+  }
+
+  get author() {
+    return this.#author;
+  }
+
+  set author(newAuthor: string) {
+    this.#author = newAuthor;
+  }
+
+  get pages() {
+    return this.#pages;
+  }
+
+  set pages(newPages: number) {
+    this.#pages = newPages;
+  }
+
+  get isRead() {
+    return this.#isRead;
+  }
+
+  set isRead(newIsRead: boolean) {
+    this.#isRead = newIsRead;
+  }
 }
 
 class Library {
-  private books: Book[] = [];
+  #books: Book[];
+
+  constructor() {
+    this.#books = []
+  }
 
   addBook(title: string, author: string, pages: number, isRead: boolean): void {
-    const newId = this.books.length === 0 ? 1 : Math.max(...this.books.map(book => book.id)) + 1;
-    const newBook = new Book(title, author, pages, newId, isRead);
-    this.books.push(newBook);
+    const id = this.#books.length === 0 ? 1 : Math.max(...this.#books.map(book => book.id)) + 1;
+    const newBook = new Book(id, title, author, pages, isRead);
+    this.#books.push(newBook);
 
     this.loadLibrary();
   }
 
   fillLibrary(): void {
-    const book1 = new Book("Zero To One", "Peter Thiel", 210, 0, true);
-    const book2 = new Book("Hackers & Painters", "Paul Graham", 258, 1, true);
-    const book3 = new Book("Computer Science Distilled", "Wladston Ferreira Filho", 168, 2, false);
-    this.books.push(book1, book2, book3);
+    const book1 = new Book(1, "Zero To One", "Peter Thiel", 210, true);
+    const book2 = new Book(2, "Hackers & Painters", "Paul Graham", 258, true);
+    const book3 = new Book(3, "Computer Science Distilled", "Wladston Ferreira Filho", 168, false);
+    this.#books.push(book1, book2, book3);
   };
 
   loadLibrary() {
@@ -126,34 +172,38 @@ class Library {
         </tr>`;
       })
       .join("");
-  
+
     booksBody.innerHTML = tabelData;
-  
-    // remove book function
-    const btns = document.querySelectorAll("button.btn-danger");
-  
-    btns.forEach((button) => {
+
+    this.addDeleteEventListeners();
+  };
+
+  getBooks(): Book[] {
+    return this.#books;
+  }
+
+  removeBook(bookId: number): Book[] {
+    this.#books = this.#books.filter(book => book.id !== bookId);
+
+    this.loadLibrary()
+
+    return this.#books;
+  }
+
+  addDeleteEventListeners(): void {
+    const deleteButtonsNodeList: NodeListOf<Element> = document.querySelectorAll("button.btn-danger");
+    const deleteButtons: HTMLButtonElement[] = Array.from(deleteButtonsNodeList).map(node => node as HTMLButtonElement);
+
+    deleteButtons.forEach((button) => {
       button.addEventListener("click", (event: Event) => {
         const target = event.target as HTMLButtonElement;
         if (target) {
           const bookId = parseInt(target.value);
-  
+
           myLibrary.removeBook(bookId);
         };
       });
     });
-  };
-
-  getBooks(): Book[] {
-    return this.books;
-  }
-
-  removeBook(bookId: number): Book[] {
-    this.books = this.books.filter(book => book.id !== bookId);
-
-    this.loadLibrary()
-
-    return this.books;
   }
 }
 
