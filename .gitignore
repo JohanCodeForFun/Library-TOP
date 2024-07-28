@@ -1,3 +1,4 @@
 node_modules
 .vscode
-public
+public/MyClassExample.js
+public/refactor.js
