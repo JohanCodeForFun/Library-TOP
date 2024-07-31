@@ -1,4 +1,4 @@
-import myLibrary from "./app";
+import { myLibrary } from "./app";
 
 const FormHandler = (() => {
   function create() {
