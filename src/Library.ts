@@ -99,9 +99,10 @@ class Library {
   addIsReadEventListeners(): void {
     const checkboxNodeList: NodeListOf<Element> = document.querySelectorAll('input[type="checkbox"]');
     const checkboxes: HTMLInputElement[] = Array.from(checkboxNodeList).map(node => node as HTMLInputElement);
+    const filteredCheckboxes = checkboxes.filter(checkbox => checkbox.id !== "inputIsRead")
 
-    checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("click", (event: Event) => {
+    filteredCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener("click", () => {
         const match = checkbox.id.match(/\d+$/);
         if (match) {
           const bookId = parseInt(match[0], 10);
