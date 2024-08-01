@@ -21,11 +21,8 @@ const popoverList = [...popoverTriggerList].map(
   (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
 );
 
-console.log(popoverList)
-
-
-
 export const myLibrary = new Library();
+
 myLibrary.fillLibrary();
 
 myLibrary.loadLibrary();
