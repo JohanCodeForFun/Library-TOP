@@ -1,4 +1,3 @@
 node_modules
 .vscode
-public/MyClassExample.js
-public/refactor.js
+.DS_Store
