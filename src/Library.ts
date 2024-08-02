@@ -1,5 +1,6 @@
 import { myLibrary } from "./app";
 import Book from "./Book";
+import { triggerPopover } from "./popover";
 
 const booksBody = document.querySelector("#booksBody")!;
 
@@ -14,6 +15,8 @@ class Library {
     const id = this.#books.length === 0 ? 1 : Math.max(...this.#books.map(book => book.id)) + 1;
     const newBook = new Book(id, title, author, pages, isRead);
     this.#books.push(newBook);
+
+    triggerPopover();
 
     this.loadLibrary();
   }
