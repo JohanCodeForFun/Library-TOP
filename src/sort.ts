@@ -43,7 +43,6 @@ function sortTableByColumn(
 
 document.querySelectorAll(".table-sortable th").forEach((headerCell) => {
   headerCell.addEventListener("click", () => {
-    console.log("first")
     // const tableElement = headerCell.closest('.table');
     const tableElement = headerCell.parentElement?.parentElement
       ?.parentElement as HTMLTableElement;
