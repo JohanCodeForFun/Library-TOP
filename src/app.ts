@@ -4,6 +4,8 @@ import FormHandler from "./formHandler";
 import sortTableByColumn from "./sort";
 import Library from "./Library";
 
+import './styles.css';
+
 document.addEventListener("DOMContentLoaded", () => {
   const formHandler = FormHandler.create();
   formHandler.initializeEventListeners();
