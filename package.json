@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Library app from TOP",
   "main": "app.js",
+  "sideEffects": ["*.css"],
   "scripts": {
     "dev": "webpack --watch",
     "build": "webpack"
