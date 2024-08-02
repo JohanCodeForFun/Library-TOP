@@ -7,12 +7,6 @@
  * @param {boolean} asc determines if the sorting will be ascending order
  */
 
-const sortById = document.querySelector("#sort-by-id") as HTMLImageElement;
-const sortByTitle = document.querySelector("#sort-by-title") as HTMLImageElement;
-const sortByAuthor = document.querySelector("#sort-by-author") as HTMLImageElement;
-const sortByPages = document.querySelector("#sort-by-pages") as HTMLImageElement;
-const sortByRead = document.querySelector("#sort-by-read") as HTMLImageElement;
-
 function sortTableByColumn(
   table: HTMLTableElement,
   column: number,
@@ -49,6 +43,7 @@ function sortTableByColumn(
 
 document.querySelectorAll(".table-sortable th").forEach((headerCell) => {
   headerCell.addEventListener("click", () => {
+    console.log("first")
     // const tableElement = headerCell.closest('.table');
     const tableElement = headerCell.parentElement?.parentElement
       ?.parentElement as HTMLTableElement;
