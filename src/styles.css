@@ -1,3 +1,7 @@
+.custom-popover .popover-body {
+	color: red;
+}
+
 .table-sortable th {
 	cursor: pointer;
 }

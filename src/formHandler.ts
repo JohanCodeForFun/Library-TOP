@@ -1,8 +1,9 @@
 import { myLibrary } from "./app";
+declare let bootstrap: any;
 
 const FormHandler = (() => {
   function create() {
-    const submitButton = document.querySelector("#submitBook") as HTMLButtonElement;
+    const submitButton = document.querySelector("#submitBook") as HTMLAnchorElement | null;
 
     function getFormValues() {
       const title = (document.querySelector("#inputTitle") as HTMLInputElement).value;
@@ -17,7 +18,38 @@ const FormHandler = (() => {
       event.preventDefault();
       const { title, author, pages, isRead } = getFormValues();
 
-      myLibrary.addBook(title, author, pages, isRead);
+      if (!submitButton) {
+        return;
+      }
+      
+      if (title !== "" && author !== "" && !Number.isNaN(pages)) {
+        const existingPopover = bootstrap.Popover.getInstance(submitButton);
+        if (existingPopover) {
+          existingPopover.dispose();
+        }
+
+        submitButton.removeAttribute("data-bs-custom-class");
+        submitButton.setAttribute("data-bs-content", "Book successfully added!");
+
+        const popover = new bootstrap.Popover(submitButton);
+        popover.show();
+
+        myLibrary.addBook(title, author, pages, isRead);
+      } else {
+        const existingPopover = bootstrap.Popover.getInstance(submitButton);
+        if (existingPopover) {
+          existingPopover.dispose();
+        }
+
+        submitButton.setAttribute("data-bs-content", "Must fill in all fields.");
+        submitButton.setAttribute("data-bs-custom-class", "custom-popover");
+        const popover = new bootstrap.Popover(submitButton);
+        popover.show();
+
+        setTimeout(() => {
+          popover.hide();
+        }, 2100);
+      }
     }
 
     function initializeEventListeners() {
